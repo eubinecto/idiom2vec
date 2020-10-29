@@ -1,0 +1,9 @@
+/c2dvenv/
+/data
+.idea/.gitignore
+.idea/codeStyles/
+.idea/context2def.iml
+.idea/inspectionProfiles/
+.idea/misc.xml
+.idea/modules.xml
+.idea/vcs.xml
