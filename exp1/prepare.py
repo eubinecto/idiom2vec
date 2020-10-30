@@ -10,10 +10,11 @@ class Prepare:
     """
     1. load data
     2. clean texts
-    3. tokenise texts
+    3. tokenize texts
     4. build vocabulary
-    5. build BOW wtih word2vec from vocab
+    5. build BOW with word2vec from vocab
     """
+
     @classmethod
     def load_c2def_csv(cls) -> pd.DataFrame:
         return pd.read_csv(C2DEF_CSV_PATH)
