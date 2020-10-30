@@ -48,9 +48,13 @@ def main():
     # if you want to find dist with measures other than cosine (e.g. l2, l2, dot product, vector addition, etc).
     # you'll have to get the vectors directly compute the distances yourself.
     # they return numpy nd arrays
-    cat: np.ndarray = fasttext_model.get_vector("cat")
-    dog: np.ndarray = fasttext_model.get_vector("dog")
-    human: np.ndarray = fasttext_model.get_vector("human")
+    zebra: np.ndarray = fasttext_model.get_vector("zebra")
+    stripe: np.ndarray = fasttext_model.get_vector("stripe")
+    brown: np.ndarray = fasttext_model.get_vector("brown")
+    # you can do vector operations
+    sims = fasttext_model.similar_by_vector(zebra - stripe + brown, topn=10)
+    # you will get antelope in one of the results!
+    print(sims)
 
 
 if __name__ == '__main__':
