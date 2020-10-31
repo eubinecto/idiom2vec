@@ -46,9 +46,8 @@ def main():
     dists = fasttext_model.distances("cat", ["dog", "human"])
     print(dists)
     # if you want to find dist with measures other than cosine (e.g. l2, l2, dot product, vector addition, etc).
-    # you'll have to get the vectors directly compute the distances yourself.
-    # they return numpy nd arrays
-    zebra: np.ndarray = fasttext_model.get_vector("zebra")
+    # you'll have to get the vectors directly and compute the distances yourself.
+    zebra: np.ndarray = fasttext_model.get_vector("zebra")  # returns a numpy array
     stripe: np.ndarray = fasttext_model.get_vector("stripe")
     brown: np.ndarray = fasttext_model.get_vector("brown")
     # you can do vector operations
