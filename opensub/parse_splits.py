@@ -7,21 +7,9 @@ import os
 from sys import stdout
 logging.basicConfig(stream=stdout, level=logging.INFO)
 # to get the names of all files under the splits directory
-NUM_PROC = 5
+NUM_PROC = 8
 MIN_LENGTH = 2
 NUM_CONTEXTS = 10
-
-
-def setup_logger(logger):
-    # create console handler and set level to debug
-    ch = logging.StreamHandler()
-    ch.setLevel(logging.INFO)
-    # create formatter
-    formatter = logging.Formatter("%(asctime)s;%(levelname)s;%(message)s")
-    # add formatter to ch
-    ch.setFormatter(formatter)
-    # add ch to logger
-    logger.addHandler(ch)
 
 
 def should_skip(line) -> bool:
@@ -44,11 +32,9 @@ def to_ndjson(zipped_path):
     parses a batch (all subtitles for a movie) to ndjson,
     and write ndjson to the output path.
     """
-    logger = logging.getLogger("to_ndjson")
-    setup_logger(logger)
     # unpack the zipped path
-    batch_path, out_path = zipped_path
     logger = logging.getLogger("to_ndjson")
+    batch_path, out_path = zipped_path
     # init a bucket for previous lines
     prev_lines = list()
     # open the two files

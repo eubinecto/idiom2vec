@@ -6,7 +6,13 @@ from os import path
 # define the directories here
 ROOT_DIR = Path(__file__).resolve().parent
 DATA_DIR = path.join(ROOT_DIR, "data")
+WORD2VEC_DIR = path.join(DATA_DIR, "word2vec")
+OPENSUB_DIR = path.join(DATA_DIR, "opensub")
+
 # the dataset to use and test
-FASTTEXT_VEC_PATH = path.join(DATA_DIR, "crawl-300d-2M.vec")
-FASTTEXT_PKL_PATH = path.join(DATA_DIR, "crawl-300d-2M.pkl")  # path to store the pickle binary
+FASTTEXT_VEC_PATH = path.join(WORD2VEC_DIR, "crawl-300d-2M.vec")
+FASTTEXT_PKL_PATH = path.join(WORD2VEC_DIR, "crawl-300d-2M.pkl")  # path to store the pickle binary
+
+
+# delimiter to use for reading & writing data
 DELIM = "\t"

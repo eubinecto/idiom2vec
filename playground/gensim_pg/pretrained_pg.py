@@ -11,11 +11,11 @@ logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
 
 
 def load_fasttext_model() -> Word2VecKeyedVectors:
-    logger = logging.getLogger("load_fasttext_model")
     """
     load the model from cache if stored already. if not, build the model. (will take about 10 minutes)
     :return:
     """
+    logger = logging.getLogger("load_fasttext_model")
     if path.exists(FASTTEXT_PKL_PATH):
         with open(FASTTEXT_PKL_PATH, 'rb') as fh:
             logger.info("loading from cache...:{}".format(FASTTEXT_PKL_PATH))
