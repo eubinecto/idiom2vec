@@ -10,6 +10,5 @@
 .idea/other.xml
 __pycache__/
 playground/__pycache__/
-/idi2topsenv
+/idiom2vecenv
 .idea/workspace.xml
-.idea/idiom2topics.iml

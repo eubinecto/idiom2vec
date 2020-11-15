@@ -50,10 +50,17 @@ def main():
     zebra: np.ndarray = fasttext_model.get_vector("zebra")  # returns a numpy array
     stripe: np.ndarray = fasttext_model.get_vector("stripe")
     brown: np.ndarray = fasttext_model.get_vector("brown")
-    # you can do vector operations
+    # arithmetics on words!
     sims = fasttext_model.similar_by_vector(zebra - stripe + brown, topn=10)
-    # you will get antelope in one of the results!
-    print(sims)
+    for idx, sim in enumerate(sims):
+        print("{}:{}".format(idx + 1, sim))
+
+    print("-----")
+    eagle = fasttext_model.get_vector("eagle")
+    feathers = fasttext_model.get_vector("feathers")
+    sims_2 = fasttext_model.similar_by_vector(eagle - feathers, topn=10)
+    for idx, sim in enumerate(sims_2):
+        print("{}:{}".format(idx + 1, sim))
 
 
 if __name__ == '__main__':
