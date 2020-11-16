@@ -10,12 +10,12 @@ You cut a deal for your soul. Cut a deal.
 The deal was you'd see Wanda and then become Hellspawn... a ranking officer in the devil's army.
 Well, now you've seen her.
 Time to pay the piper.""".split("\n")
+# use this language model
+nlp = spacy.load(name='en_core_web_sm')
 
 
 def main():
-    global sentences
-    # use this language model
-    nlp = spacy.load(name='en_core_web_sm')
+    global sentences, nlp
     docs = [nlp(sentence) for sentence in sentences]
 
     # print out part of speech
