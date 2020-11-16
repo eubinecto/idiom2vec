@@ -1,3 +1,5 @@
+# to play around using gensim to load pre-trained word2vec models
+# and do arithmetics on words
 
 from gensim.models import KeyedVectors
 from gensim.models.keyedvectors import Word2VecKeyedVectors
