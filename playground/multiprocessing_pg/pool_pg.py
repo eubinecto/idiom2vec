@@ -14,7 +14,7 @@ def func(x):
 def main():
     with mp.Pool(processes=5) as p:
         batches = list(range(1000))
-        # just provide batches to the function.
+        # jushttps://github.com/mdavolio/mancalat provide batches to the function.
         # pool.map will apply function to each batch asynchronously.
         p.map(func, batches)
 
