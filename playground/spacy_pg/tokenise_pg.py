@@ -36,7 +36,6 @@ def main():
             # get back the string representation of the match
             match_id_string = nlp.vocab.strings[match_id]
             with doc.retokenize() as retokenizer:
-                # this will merge the tokens with..
                 retokenizer.merge(doc[start:end],
                                   # use match_id_string to be the representative
                                   attrs={"LEMMA": match_id_string})
