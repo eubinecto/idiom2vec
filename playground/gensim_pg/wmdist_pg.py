@@ -4,8 +4,7 @@ from termcolor import colored
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
 # for comparing similarities
-from playground.gensim_pg import load_fasttext_model
-import numpy as np
+from playground.gensim_pg.pretrained_pg import load_fasttext_model
 
 # testing with these
 IDIOM = "fair and square"
@@ -88,5 +87,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-
-
