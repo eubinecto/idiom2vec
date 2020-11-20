@@ -14,7 +14,7 @@ from termcolor import colored
 def tokenize_with_match(nlp: Language,
                         matcher: Union[Matcher, PhraseMatcher],
                         sentences: List[str]) -> List[Doc]:
-    docs = [nlp(sent) for sent in sentences]
+    docs = [nlp(sent.strip()) for sent in sentences]
     for doc in docs:
         matches = matcher(doc)
         # PhraseMatcher.__call__ returns a list of (match_id, start, end) tuples.
