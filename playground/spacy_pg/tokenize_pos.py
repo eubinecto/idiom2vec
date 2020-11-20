@@ -30,15 +30,17 @@ def main():
     # and callback is now an optional argument.
     matcher.add("of one's own accord", patterns=patterns_1, on_match=None)
 
-    # patterns for "pull the wool over one's eyes
+    # patterns for idiom:  "pull the wool over one's eyes"
     patterns_2 = [
         [{"LEMMA": "pull"}, {"LEMMA": "the"},
          {"LEMMA": "wool"}, {"LEMMA": "over"},
          {"TAG": "PRP$"}, {"LEMMA": "eye"}]
     ]
     matcher.add("pull the wool over one's eyes", patterns=patterns_2, on_match=None)
-
+    # generate documents
     docs = tokenize_with_match(nlp, matcher, sentences)
+
+    # print out the results
     for doc, sent in zip(docs, sentences):
         print(colored(sent.strip(), 'magenta'))
         for token in doc:
