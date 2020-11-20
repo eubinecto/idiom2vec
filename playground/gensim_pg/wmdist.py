@@ -4,7 +4,7 @@ from termcolor import colored
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
 # for comparing similarities
-from playground.gensim_pg.pretrained import load_fasttext_model
+from playground.gensim_pg.nearest_neighbours import load_fasttext_model
 
 # testing with these
 IDIOM = "fair and square"
