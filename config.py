@@ -7,7 +7,7 @@ from os import path
 ROOT_DIR = Path(__file__).resolve().parent
 DATA_DIR = path.join(ROOT_DIR, "data")
 WORD2VEC_DIR = path.join(DATA_DIR, "word2vec")
-OPENSUB_DIR = path.join(DATA_DIR, "opensub")
+OPENSUB_DIR = path.join(DATA_DIR, "idiom2vec/opensub")
 PLAYGROUND_DIR = path.join(DATA_DIR, "playground")
 GENSIM_PG_DIR = path.join(PLAYGROUND_DIR, "gensim_pg")
 # the dataset to use and test
