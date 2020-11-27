@@ -21,7 +21,12 @@ DELIM = "\t"
 
 # matcher related
 IDIOM_MATCHER_PKL_PATH = path.join(SLIDE_DIR, 'idiom_matcher.pkl')
-IDIOM_MATCHER_PATTERNS_TSV_PATH = path.join(SLIDE_DIR, "idiom_matcher_patterns.tsv")
+IDIOM_MATCHER_INFO_TSV_PATH = path.join(SLIDE_DIR, "idiom_matcher_info.tsv")
 
 # spacy
 NLP_MODEL = "en_core_web_sm"
+
+
+# corpus
+CORPUS_DIR = path.join(DATA_DIR, "corpus")
+SAMPLE_SUB_NDJSON_PATH = path.join(CORPUS_DIR, "sample_sub.ndjson")

@@ -1,6 +1,6 @@
 from spacy import load
 from config import NLP_MODEL
-from idiom2vec.slide.utils.idiom_nlp import IdiomNLP
+from idiom2vec.slide.utils import IdiomNLP
 
 # sentences to test
 SENTENCES = (
