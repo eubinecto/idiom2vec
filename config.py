@@ -19,6 +19,9 @@ FASTTEXT_PKL_PATH = path.join(WORD2VEC_DIR, "crawl-300d-2M.pkl")  # path to stor
 # delimiter to use for reading & writing data
 DELIM = "\t"
 
-# nlp -related
+# matcher related
 IDIOM_MATCHER_PKL_PATH = path.join(SLIDE_DIR, 'idiom_matcher.pkl')
+IDIOM_MATCHER_PATTERNS_TSV_PATH = path.join(SLIDE_DIR, "idiom_matcher_patterns.tsv")
+
+# spacy
 NLP_MODEL = "en_core_web_sm"
