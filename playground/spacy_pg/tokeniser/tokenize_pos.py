@@ -2,7 +2,7 @@ from spacy import load
 from spacy.matcher import Matcher
 from spacy.tokens.token import Token
 from termcolor import colored
-from playground.spacy_pg.tokenize_hardcode import tokenize_with_match
+from playground.spacy_pg.tokeniser.tokenize_hardcode import tokenize_with_match
 
 
 def main():
@@ -23,6 +23,7 @@ def main():
         [{"LEMMA": "of"},
          # PRP$ is a tag for "pronoun, possessive". (POS=DET)
          # e.g. her, his, its, their, my, etc.
+         # for more details: https://spacy.io/api/annotation#pos-tagging
          {"TAG": "PRP$"},
          {"LEMMA": "own"}, {"LEMMA": "accord"}]
     ]

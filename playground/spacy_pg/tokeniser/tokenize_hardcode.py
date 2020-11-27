@@ -26,7 +26,6 @@ def tokenize_with_match(nlp: Language,
                 retokenizer.merge(doc[start:end],
                                   # use match_id_string to be the representative
                                   attrs={"LEMMA": match_id_string})
-
     return docs
 
 
