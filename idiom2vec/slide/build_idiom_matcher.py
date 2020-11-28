@@ -1,8 +1,4 @@
-import json
 from typing import Generator, List
-
-from spacy.tokens import Doc
-
 from config import SLIDE_DIR
 from os import path
 import csv
@@ -27,6 +23,10 @@ EXCEPTIONS = (
 POSS_HOLDER_CASES = {
     "one's": [{"ORTH": "one's"}],
     "someone's": [{"ORTH": "someone's"}]
+}
+
+SPECIAL_IDIOM_CASES = {
+    "catch-22": [{"ORTH": "catch"}, {"ORTH": "-"}, {"ORTH": "22"}]
 }
 
 
@@ -66,11 +66,6 @@ def is_target(idiom: str) -> bool:
            (is_above_min_wc(idiom) or is_above_min_len(idiom) or is_hyphenated(idiom))
 
 
-# focus on one thing -> think less!
-def cleanse_idiom(idiom: str) -> str:
-    return idiom.replace("-", " ")
-
-
 def build_idiom_matcher(nlp: Language, idioms: List[str]) -> Matcher:
     """
     uses nlp to build patterns for the matcher.
@@ -79,38 +74,59 @@ def build_idiom_matcher(nlp: Language, idioms: List[str]) -> Matcher:
     matcher = Matcher(nlp.vocab)  # matcher to build
     # then add idiom matches
     for idiom in idioms:
-        patterns = list()
-        idiom_doc = nlp(idiom)
-        # construct a pattern for each idiom..
-        for token in idiom_doc:
-            if token.text in POSS_HOLDER_CASES.keys():
-                pattern = {"TAG": "PRP$"}
-            else:
-                # use the lemma as the
-                pattern = {"LEMMA": token.lemma_}
-            patterns.append(pattern)
+        # for each idiom, you want to build this.
+        patterns: List[List[dict]]
+        idiom_doc = nlp(idiom.lower())  # as for building patterns, use uncased version. of the idiom.
+        if "-" in idiom:
+            # should include both hyphenated & non-hyphenated forms
+            # e.g. catch-22, catch 22
+            pattern_hyphen = [
+                {"TAG": "PRP$"} if token.text in POSS_HOLDER_CASES.keys()
+                else {"LEMMA": token.lemma_}
+                for token in idiom_doc
+            ]  # include hyphens
+            pattern_no_hyphen = [
+                {"TAG": "PRP$"} if token.text in POSS_HOLDER_CASES.keys()
+                else {"LEMMA": token.lemma_}
+                for token in idiom_doc
+                if token.text != "-"
+            ]
+            patterns = [
+                # include two patterns
+                pattern_hyphen,
+                pattern_no_hyphen
+            ]
         else:
-            # add the pattern here
-            print(patterns)
-            matcher.add(idiom_doc.text, [patterns])
+            pattern = [
+                {"TAG": "PRP$"} if token.text in POSS_HOLDER_CASES.keys()
+                else {"LEMMA": token.lemma_}
+                for token in idiom_doc
+            ]
+            patterns = [pattern]
+        print(patterns)
+        matcher.add(idiom, patterns)
     else:
         return matcher
 
 
 def main():
-    global DELIM, IDIOM_MIN_WC, POSS_HOLDER_CASES
+    global DELIM, IDIOM_MIN_WC, POSS_HOLDER_CASES, SPECIAL_IDIOM_CASES
     # this is the end goal
     # load idioms on to memory.
     idioms = [
-        cleanse_idiom(idiom)
+        idiom
         for idiom in load_slide_idioms()
         if is_target(idiom)
     ]
     nlp = load(NLP_MODEL)
-    # add rules for place holders
+    # add cases for place holders
     for placeholder, case in POSS_HOLDER_CASES.items():
         nlp.tokenizer.add_special_case(placeholder, case)
-    # get the matcher
+    # add cases for words hyphenated with numbers
+    for idiom, case in SPECIAL_IDIOM_CASES.items():
+        nlp.tokenizer.add_special_case(idiom, case)
+
+    # build patterns for the idioms into a matcher
     idiom_matcher = build_idiom_matcher(nlp, idioms)
     # save it as pickle binary. (matcher is not JSON-serializable.. this is the only way)
     with open(IDIOM_MATCHER_PKL_PATH, 'wb') as fh:

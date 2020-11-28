@@ -2,7 +2,7 @@ import pickle
 
 from spacy import Language
 from spacy.matcher import Matcher
-from spacy.tokens import Doc
+from spacy.tokens.doc import Doc
 from config import IDIOM_MATCHER_PKL_PATH
 from os import path
 
@@ -16,9 +16,10 @@ def load_idiom_matcher() -> Matcher:
 
 class MergeIdiomComponent:
     def __init__(self, idiom_matcher):
-        self.idiom_matcher = idiom_matcher
+        self.idiom_matcher: Matcher = idiom_matcher
 
     def __call__(self, doc: Doc) -> Doc:
+        # use lowercase version of the doc.
         matches = self.idiom_matcher(doc)
         for match_id, start, end in matches:
             # get back the lemma for this match
@@ -43,6 +44,9 @@ class IdiomNLP:
     def __init__(self, nlp: Language, idiom_matcher: Matcher):
         self.nlp = nlp
         self.idiom_matcher = idiom_matcher
+        Language.component(
+            name="cleanse_idiom",
+        )
         # build a factory with the matcher
         Language.factory(
             name="merge_idiom",
@@ -55,4 +59,6 @@ class IdiomNLP:
 
     def __call__(self, text: str, *args, **kwargs):
         # just a wrapper, to construct the pipeline on init.
-        return self.nlp(text)
+        # I know that you'd lose some information here.. (Kate -> kate. NOT Proper Noun anymore, just a Noun).
+        # but, we've got to make a compromise here.
+        return self.nlp(text.lower())
