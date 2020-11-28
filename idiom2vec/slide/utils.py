@@ -7,6 +7,13 @@ from config import IDIOM_MATCHER_PKL_PATH
 from os import path
 
 
+def load_idiom_matcher() -> Matcher:
+    if not path.exists(IDIOM_MATCHER_PKL_PATH):
+        raise ValueError
+    with open(IDIOM_MATCHER_PKL_PATH, 'rb') as fh:
+        return pickle.loads(fh.read())
+
+
 class MergeIdiomComponent:
     def __init__(self, idiom_matcher):
         self.idiom_matcher = idiom_matcher
@@ -33,9 +40,9 @@ def create_merge_idiom_component(nlp, name, idiom_matcher) -> MergeIdiomComponen
 
 
 class IdiomNLP:
-    def __init__(self, nlp):
+    def __init__(self, nlp: Language, idiom_matcher: Matcher):
         self.nlp = nlp
-        self.idiom_matcher = IdiomNLP.load_idiom_matcher()
+        self.idiom_matcher = idiom_matcher
         # build a factory with the matcher
         Language.factory(
             name="merge_idiom",
@@ -49,10 +56,3 @@ class IdiomNLP:
     def __call__(self, text: str, *args, **kwargs):
         # just a wrapper, to construct the pipeline on init.
         return self.nlp(text)
-
-    @staticmethod
-    def load_idiom_matcher() -> Matcher:
-        if not path.exists(IDIOM_MATCHER_PKL_PATH):
-            raise ValueError
-        with open(IDIOM_MATCHER_PKL_PATH, 'rb') as fh:
-            return pickle.loads(fh.read())

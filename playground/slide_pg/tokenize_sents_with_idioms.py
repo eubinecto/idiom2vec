@@ -1,6 +1,8 @@
 from spacy import load
+from spacy.tokens import Token
+
 from config import NLP_MODEL
-from idiom2vec.slide.utils import IdiomNLP
+from idiom2vec.slide.utils import IdiomNLP, load_idiom_matcher
 
 # sentences to test
 SENTENCES = (
@@ -12,14 +14,17 @@ SENTENCES = (
 
 def main():
     nlp = load(NLP_MODEL)
+    idiom_matcher = load_idiom_matcher()
     # this wrapper class
-    idiom_nlp = IdiomNLP(nlp)
+    idiom_nlp = IdiomNLP(nlp, idiom_matcher)
 
     for sent in SENTENCES:
         doc = idiom_nlp(sent)
         lemmas = [token.lemma_ for token in doc]
+        lex_ids = [token.lex_id for token in doc]
         print("original:", doc.text)
         print("lemmas:", lemmas)
+        print("lex ids:", lex_ids)
         print("##########")
 
 
