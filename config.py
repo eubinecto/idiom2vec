@@ -32,4 +32,6 @@ SLIDE_POS_TSV_PATH = path.join(SLIDE_DIR, "slide_pos.tsv")
 
 # corpus
 CORPUS_DIR = path.join(DATA_DIR, "corpus")
-SAMPLE_SUB_NDJSON_PATH = path.join(OPENSUB_DIR, "sample.ndjson")
+SAMPLE_1_NDJSON_PATH = path.join(OPENSUB_DIR, "en_0_5297760_6728603.ndjson")
+SAMPLE_2_NDJSON_PATH = path.join(OPENSUB_DIR, "en_0_2363046_4933283.ndjson")
+SAMPLE_3_NDJSON_PATH = path.join(OPENSUB_DIR, "en_0_5614038_6583095.ndjson")

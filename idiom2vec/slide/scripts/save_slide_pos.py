@@ -3,7 +3,7 @@ import csv
 import json
 from wiktionaryparser import WiktionaryParser
 from config import SLIDE_POS_TSV_PATH
-from idiom2vec.slide.utils import load_slide_idioms
+from idiom2vec.slide.utils import load_idioms
 
 WIK_PARSER = WiktionaryParser()
 HEADER = [
@@ -24,7 +24,7 @@ def dl_idiom_pos(idiom: str) -> List[str]:
 
 def main():
     global HEADER
-    idioms = load_slide_idioms()
+    idioms = load_idioms()
     with open(SLIDE_POS_TSV_PATH, 'w') as fh:
         tsv_writer = csv.writer(fh, delimiter="\t")
         tsv_writer.writerow(HEADER)

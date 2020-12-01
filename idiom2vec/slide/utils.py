@@ -9,14 +9,58 @@ from os import path
 import csv
 
 
-# ------ for preprocessing data --------- #
-def load_slide_idioms() -> Generator[str, None, None]:
+# not to include in the vocabulary
+EXCEPTIONS = (
+    "if needs be"  # duplicate ->  "if need be" is enough.
+)
+
+
+DELIM = "\t"
+SEPARATOR = " "
+IDIOM_MIN_WC = 3  # aim for the idioms with length greater than 3
+IDIOM_MIN_LENGTH = 14
+
+
+def is_above_min_len(idiom: str) -> bool:
+    global IDIOM_MIN_LENGTH
+    return len(idiom) >= IDIOM_MIN_LENGTH
+
+
+def is_above_min_wc(idiom: str) -> bool:
+    global IDIOM_MIN_WC, SEPARATOR
+    return len(idiom.split(SEPARATOR)) >= IDIOM_MIN_WC
+
+
+def is_hyphenated(idiom: str) -> bool:
+    return idiom.find("-") != -1
+
+
+def is_not_exception(idiom: str) -> bool:
+    global EXCEPTIONS
+    return idiom not in EXCEPTIONS
+
+
+def is_target(idiom: str) -> bool:
+    # if it is either long enough or hyphenated, then I'm using it.
+    return is_not_exception and \
+           (is_above_min_wc(idiom) or is_above_min_len(idiom) or is_hyphenated(idiom))
+
+
+def load_idioms() -> Generator[str, None, None]:
     with open(SLIDE_TSV_PATH, 'r') as fh:
         slide_tsv = csv.reader(fh, delimiter="\t")
         # skip the  header
         next(slide_tsv)
         for row in slide_tsv:
             yield row[0]
+
+
+def load_target_idioms() -> Generator[str, None, None]:
+    return (
+        idiom
+        for idiom in load_idioms()
+        if is_target(idiom)
+    )
 
 
 def load_idiom_matcher() -> Matcher:

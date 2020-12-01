@@ -1,10 +1,10 @@
 # building
-from idiom2vec.opensub.utils import load_sample
+from idiom2vec.opensub.utils import load_examples
 from termcolor import colored
 
 
 def main():
-    for example in load_sample():
+    for example in load_examples():
         for context in example['contexts']:
             print(colored(context, 'magenta'))
         print("response:", colored(example['response'], 'blue'))

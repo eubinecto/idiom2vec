@@ -1,12 +1,21 @@
 from typing import Generator
-from config import SAMPLE_SUB_NDJSON_PATH
+from config import SAMPLE_1_NDJSON_PATH, SAMPLE_2_NDJSON_PATH, SAMPLE_3_NDJSON_PATH
 import json
 
 
-def load_sample() -> Generator[dict, None, None]:
-    with open(SAMPLE_SUB_NDJSON_PATH, 'r') as fh:
-        for line in fh:
-            yield json.loads(line)
+SAMPLE_PATHS = (
+    SAMPLE_1_NDJSON_PATH,
+    SAMPLE_2_NDJSON_PATH,
+    SAMPLE_3_NDJSON_PATH
+)
+
+
+def load_examples() -> Generator[dict, None, None]:
+    global SAMPLE_PATHS
+    for sample_path in SAMPLE_PATHS:
+        with open(sample_path, 'r') as fh:
+            for line in fh:
+                yield json.loads(line)
 
 
 def cleanse_resp(resp: str) -> str:
@@ -18,7 +27,7 @@ def cleanse_resp(resp: str) -> str:
 def load_resps() -> Generator[str, None, None]:
     return (
         cleanse_resp(example['response'])
-        for example in load_sample()
+        for example in load_examples()
     )
 
 

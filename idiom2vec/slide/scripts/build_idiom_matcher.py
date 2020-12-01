@@ -1,22 +1,10 @@
-from typing import  List
-from config import SLIDE_DIR
-from os import path
+from typing import List, Generator
 from spacy import load, Language
 from spacy.matcher import Matcher
 import pickle
 from config import NLP_MODEL, IDIOM_MATCHER_PKL_PATH
-from idiom2vec.slide.utils import load_slide_idioms
+from idiom2vec.slide.utils import load_target_idioms
 
-DELIM = "\t"
-SEPARATOR = " "
-IDIOM_MIN_WC = 3  # aim for the idioms with length greater than 3
-IDIOM_MIN_LENGTH = 14
-IDIOM_TOKENIZER_PKL_PATH = path.join(SLIDE_DIR, 'idiom_tokenizer.pkl')
-
-# not to include in the vocabulary
-EXCEPTIONS = (
-    "if needs be"  # duplicate ->  "if need be" is enough.
-)
 
 # placeholder's for possessive pronouns should not be tokenized
 POSS_HOLDER_CASES = {
@@ -24,37 +12,13 @@ POSS_HOLDER_CASES = {
     "someone's": [{"ORTH": "someone's"}]
 }
 
+# some cases that must be hard-coded.
 SPECIAL_IDIOM_CASES = {
     "catch-22": [{"ORTH": "catch"}, {"ORTH": "-"}, {"ORTH": "22"}]
 }
 
 
-def is_above_min_len(idiom: str) -> bool:
-    global IDIOM_MIN_LENGTH
-    return len(idiom) >= IDIOM_MIN_LENGTH
-
-
-def is_above_min_wc(idiom: str) -> bool:
-    global IDIOM_MIN_WC, SEPARATOR
-    return len(idiom.split(SEPARATOR)) >= IDIOM_MIN_WC
-
-
-def is_hyphenated(idiom: str) -> bool:
-    return idiom.find("-") != -1
-
-
-def is_not_exception(idiom: str) -> bool:
-    global EXCEPTIONS
-    return idiom not in EXCEPTIONS
-
-
-def is_target(idiom: str) -> bool:
-    # if it is either long enough or hyphenated, then I'm using it.
-    return is_not_exception and \
-           (is_above_min_wc(idiom) or is_above_min_len(idiom) or is_hyphenated(idiom))
-
-
-def build_idiom_matcher(nlp: Language, idioms: List[str]) -> Matcher:
+def build_idiom_matcher(nlp: Language, idioms: Generator[str, None, None]) -> Matcher:
     """
     uses nlp to build patterns for the matcher.
     """
@@ -98,14 +62,10 @@ def build_idiom_matcher(nlp: Language, idioms: List[str]) -> Matcher:
 
 
 def main():
-    global DELIM, IDIOM_MIN_WC, POSS_HOLDER_CASES, SPECIAL_IDIOM_CASES
+    global POSS_HOLDER_CASES, SPECIAL_IDIOM_CASES
     # this is the end goal
     # load idioms on to memory.
-    idioms = [
-        idiom
-        for idiom in load_slide_idioms()
-        if is_target(idiom)
-    ]
+    idioms = load_target_idioms()
     nlp = load(NLP_MODEL)
     # add cases for place holders
     for placeholder, case in POSS_HOLDER_CASES.items():
