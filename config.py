@@ -29,4 +29,4 @@ NLP_MODEL = "en_core_web_sm"
 
 # corpus
 CORPUS_DIR = path.join(DATA_DIR, "corpus")
-SAMPLE_SUB_NDJSON_PATH = path.join(CORPUS_DIR, "sample_sub.ndjson")
+SAMPLE_SUB_NDJSON_PATH = path.join(OPENSUB_DIR, "sample.ndjson")

@@ -44,10 +44,7 @@ class IdiomNLP:
     def __init__(self, nlp: Language, idiom_matcher: Matcher):
         self.nlp = nlp
         self.idiom_matcher = idiom_matcher
-        Language.component(
-            name="cleanse_idiom",
-        )
-        # build a factory with the matcher
+        # factory for merge_idiom pipeline.
         Language.factory(
             name="merge_idiom",
             retokenizes=True,

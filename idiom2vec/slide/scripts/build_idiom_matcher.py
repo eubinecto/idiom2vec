@@ -16,7 +16,7 @@ IDIOM_TOKENIZER_PKL_PATH = path.join(SLIDE_DIR, 'idiom_tokenizer.pkl')
 
 # not to include in the vocabulary
 EXCEPTIONS = (
-    "if needs be"  # duplicate. Use if need be.
+    "if needs be"  # duplicate ->  "if need be" is enough.
 )
 
 # placeholder's for possessive pronouns should not be tokenized
@@ -125,7 +125,6 @@ def main():
     # add cases for words hyphenated with numbers
     for idiom, case in SPECIAL_IDIOM_CASES.items():
         nlp.tokenizer.add_special_case(idiom, case)
-
     # build patterns for the idioms into a matcher
     idiom_matcher = build_idiom_matcher(nlp, idioms)
     # save it as pickle binary. (matcher is not JSON-serializable.. this is the only way)
