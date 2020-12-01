@@ -8,6 +8,7 @@ EXAMPLES = [
     "you need to know something",
     "They won't tell me anything else right now—they say all updates will be shared on a need-to-know basis.",
     "They won't tell me anything else right now—they say all updates will be shared on a need to know basis.",
+    "Like, he was showing me pictures of drones, and we were jumping up and down like children."
 ]
 
 
@@ -20,7 +21,7 @@ def main():
         print(sent)
         doc = idiom_nlp(sent)
         for token in doc:
-            msg = "{}|{}".format(colored(token.text, 'blue'), colored(token.dep_, 'magenta'))
+            msg = "{}|{}|{}".format(colored(token.text, 'blue'), token.lemma_, colored(token.dep_, 'magenta'))
             print(msg, end=" ")
         else:
             print("\n", end="")

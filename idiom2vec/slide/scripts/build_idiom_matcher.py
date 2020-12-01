@@ -82,12 +82,12 @@ def build_idiom_matcher(nlp: Language, idioms: List[str]) -> Matcher:
             # e.g. catch-22, catch 22
             pattern_hyphen = [
                 {"TAG": "PRP$"} if token.text in POSS_HOLDER_CASES.keys()
-                else {"LEMMA": token.lemma_}
+                else {"ORTH": token.text}  # don't use lemma
                 for token in idiom_doc
             ]  # include hyphens
             pattern_no_hyphen = [
                 {"TAG": "PRP$"} if token.text in POSS_HOLDER_CASES.keys()
-                else {"LEMMA": token.lemma_}
+                else {"ORTH": token.text}  # don't use lemma
                 for token in idiom_doc
                 if token.text != "-"
             ]
@@ -99,7 +99,8 @@ def build_idiom_matcher(nlp: Language, idioms: List[str]) -> Matcher:
         else:
             pattern = [
                 {"TAG": "PRP$"} if token.text in POSS_HOLDER_CASES.keys()
-                else {"LEMMA": token.lemma_}
+                else {"LEMMA": token.lemma_} if token.pos_ == "VERB"
+                else {"ORTH": token.text}  # if not a verb, we do exact-match
                 for token in idiom_doc
             ]
             patterns = [pattern]
