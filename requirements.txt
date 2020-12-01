@@ -1,3 +1,4 @@
+beautifulsoup4==4.9.3
 blis==0.7.2
 catalogue==2.0.1
 certifi==2020.11.8
@@ -30,6 +31,7 @@ scikit-learn==0.23.2
 scipy==1.5.3
 six==1.15.0
 smart-open==3.0.0
+soupsieve==2.0.1
 spacy-nightly==3.0.0rc2
 srsly==2.3.2
 tabulate==0.8.7
@@ -40,3 +42,4 @@ tqdm==4.51.0
 typer==0.3.2
 urllib3==1.26.2
 wasabi==0.8.0
+wiktionaryparser==0.0.97

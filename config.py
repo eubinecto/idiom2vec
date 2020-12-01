@@ -26,6 +26,9 @@ IDIOM_MATCHER_INFO_TSV_PATH = path.join(SLIDE_DIR, "idiom_matcher_info.tsv")
 # spacy
 NLP_MODEL = "en_core_web_sm"
 
+# slide data
+SLIDE_TSV_PATH = path.join(SLIDE_DIR, "slide.tsv")
+SLIDE_POS_TSV_PATH = path.join(SLIDE_DIR, "slide_pos.tsv")
 
 # corpus
 CORPUS_DIR = path.join(DATA_DIR, "corpus")

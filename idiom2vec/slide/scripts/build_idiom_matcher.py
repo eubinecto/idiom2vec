@@ -1,17 +1,16 @@
-from typing import Generator, List
+from typing import  List
 from config import SLIDE_DIR
 from os import path
-import csv
 from spacy import load, Language
 from spacy.matcher import Matcher
 import pickle
 from config import NLP_MODEL, IDIOM_MATCHER_PKL_PATH
+from idiom2vec.slide.utils import load_slide_idioms
 
 DELIM = "\t"
 SEPARATOR = " "
 IDIOM_MIN_WC = 3  # aim for the idioms with length greater than 3
 IDIOM_MIN_LENGTH = 14
-SLIDE_TSV_PATH = path.join(SLIDE_DIR, "slide.tsv")
 IDIOM_TOKENIZER_PKL_PATH = path.join(SLIDE_DIR, 'idiom_tokenizer.pkl')
 
 # not to include in the vocabulary
@@ -28,17 +27,6 @@ POSS_HOLDER_CASES = {
 SPECIAL_IDIOM_CASES = {
     "catch-22": [{"ORTH": "catch"}, {"ORTH": "-"}, {"ORTH": "22"}]
 }
-
-
-# ------ for preprocessing data --------- #
-def load_slide_idioms() -> Generator[str, None, None]:
-    global SLIDE_TSV_PATH, DELIM
-    with open(SLIDE_TSV_PATH, 'r') as fh:
-        slide_tsv = csv.reader(fh, delimiter=DELIM)
-        # skip the  header
-        next(slide_tsv)
-        for row in slide_tsv:
-            yield row[0]
 
 
 def is_above_min_len(idiom: str) -> bool:
@@ -99,8 +87,7 @@ def build_idiom_matcher(nlp: Language, idioms: List[str]) -> Matcher:
         else:
             pattern = [
                 {"TAG": "PRP$"} if token.text in POSS_HOLDER_CASES.keys()
-                else {"LEMMA": token.lemma_} if token.pos_ == "VERB"
-                else {"ORTH": token.text}  # if not a verb, we do exact-match
+                else {"LEMMA": token.lemma_}  # if not a verb, we do exact-match
                 for token in idiom_doc
             ]
             patterns = [pattern]

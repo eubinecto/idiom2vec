@@ -1,10 +1,22 @@
 import pickle
+from typing import Generator
 
 from spacy import Language
 from spacy.matcher import Matcher
 from spacy.tokens.doc import Doc
-from config import IDIOM_MATCHER_PKL_PATH
+from config import IDIOM_MATCHER_PKL_PATH, SLIDE_TSV_PATH
 from os import path
+import csv
+
+
+# ------ for preprocessing data --------- #
+def load_slide_idioms() -> Generator[str, None, None]:
+    with open(SLIDE_TSV_PATH, 'r') as fh:
+        slide_tsv = csv.reader(fh, delimiter="\t")
+        # skip the  header
+        next(slide_tsv)
+        for row in slide_tsv:
+            yield row[0]
 
 
 def load_idiom_matcher() -> Matcher:
