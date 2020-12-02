@@ -8,6 +8,8 @@ logging.basicConfig(stream=stdout, level=logging.INFO)
 
 def func(x):
     # the order in which this is computed is (should be?) arbitrary
+    # well, but this does not have global access
+    # use this pattern only if you don't need shared memory.
     print(x)
 
 

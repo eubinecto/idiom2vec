@@ -1,18 +1,10 @@
 from typing import Generator
-from config import SAMPLE_1_NDJSON_PATH, SAMPLE_2_NDJSON_PATH, SAMPLE_3_NDJSON_PATH
+from config import NDJSON_SAMPLES_PATH
 import json
 
 
-SAMPLE_PATHS = (
-    SAMPLE_1_NDJSON_PATH,
-    SAMPLE_2_NDJSON_PATH,
-    SAMPLE_3_NDJSON_PATH
-)
-
-
 def load_examples() -> Generator[dict, None, None]:
-    global SAMPLE_PATHS
-    for sample_path in SAMPLE_PATHS:
+    for sample_path in NDJSON_SAMPLES_PATH:
         with open(sample_path, 'r') as fh:
             for line in fh:
                 yield json.loads(line)
