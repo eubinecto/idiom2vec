@@ -4,6 +4,7 @@ import json
 from wiktionaryparser import WiktionaryParser
 from config import SLIDE_POS_TSV_PATH
 from idiom2vec.slide.utils import load_idioms
+# this.. we don't do it anymore.
 
 WIK_PARSER = WiktionaryParser()
 HEADER = [

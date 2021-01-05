@@ -1,8 +1,11 @@
-from typing import Generator
-from config import NDJSON_SAMPLES_PATH
+from typing import Generator, List
+from config import NDJSON_SAMPLES_PATH, SUBS_PATH
 import json
 
+from idiom2vec.slide.utils import IdiomNLP
 
+
+# load functions for training from samples
 def load_examples() -> Generator[dict, None, None]:
     for sample_path in NDJSON_SAMPLES_PATH:
         with open(sample_path, 'r') as fh:
@@ -23,4 +26,20 @@ def load_resps() -> Generator[str, None, None]:
     )
 
 
+# load functions for training from the original data
+def load_subs() -> Generator[str, None, None]:
+    with open(SUBS_PATH, 'r') as fh:
+        for sub in fh:
+            yield sub
 
+
+def load_subs_tokenized() -> Generator[List[str], None, None]:
+    pass
+
+
+class OpenSubCorpus:
+    def __init__(self, idiom_nlp: IdiomNLP):
+        self.idiom_nlp = idiom_nlp
+
+    def __iter__(self) -> Generator[List[str], None, None]:
+        return load_subs_tokenized()
