@@ -4,7 +4,7 @@
 from gensim.models import KeyedVectors
 from gensim.models.keyedvectors import Word2VecKeyedVectors
 import numpy as np
-from config import FASTTEXT_VEC_PATH, FASTTEXT_PKL_PATH
+from idiom2vec.config import FASTTEXT_VEC_PATH, FASTTEXT_PKL_PATH
 import logging
 import sys
 from os import path

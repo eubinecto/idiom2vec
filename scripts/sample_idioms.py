@@ -2,9 +2,9 @@
 
 # for global access
 from spacy import load
-from config import NLP_MODEL
+from idiom2vec.config import NLP_MODEL
 from idiom2vec.slide.utils import load_idiom_matcher, IdiomNLP
-from idiom2vec.opensub.utils import load_resps
+from idiom2vec.utils import load_resps
 from termcolor import colored
 
 IDIOM_MATCHER = load_idiom_matcher()

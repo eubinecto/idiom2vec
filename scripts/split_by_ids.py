@@ -1,5 +1,4 @@
-import logging
-from config import DELIM
+from idiom2vec.config import DELIM
 import pandas as pd
 from os import path
 import argparse

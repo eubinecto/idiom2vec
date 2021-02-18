@@ -1,5 +1,5 @@
 # building
-from idiom2vec.opensub.utils import load_examples
+from idiom2vec.utils import load_examples
 from termcolor import colored
 
 

@@ -1,6 +1,6 @@
 # -- loads the raw subtitles, tokenize them using idiom nlp, save it as ndjson -- #
-from config import SUBS_TOKENIZED_NDJSON_PATH, NLP_MODEL
-from idiom2vec.opensub.utils import load_subs
+from idiom2vec.config import SUBS_TOKENIZED_NDJSON_PATH, NLP_MODEL
+from idiom2vec.utils import load_subs
 import spacy
 import json
 from idiom2vec.slide.utils import IdiomNLP, load_idiom_matcher

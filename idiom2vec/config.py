@@ -4,7 +4,7 @@ from datetime import datetime
 # the root directory of this project
 # define the directories here
 ROOT_DIR = Path(__file__).resolve().parent
-DATA_DIR = path.join(ROOT_DIR, "data")
+DATA_DIR = path.join(ROOT_DIR, "../data")
 
 
 # to log everything. I'll put date and time to everything.
@@ -58,7 +58,7 @@ DICTIONARY_PATH = path.join(CORPUS_DIR, "dictionary.corpus")
 
 
 # idiom2vec
-IDIOM2VEC_DIR = path.join(DATA_DIR, 'idiom2vec')
+IDIOM2VEC_DIR = path.join(DATA_DIR, '')
 IDIOM2VEC_MODELS_DIR = path.join(IDIOM2VEC_DIR, "models")
 IDIOM2VEC_LOGS_DIR = path.join(IDIOM2VEC_DIR, "logs")
 IDIOM2VEC_PKL_PATH = path.join(IDIOM2VEC_MODELS_DIR, "idiom2vec{}.pkl".format(now_str))

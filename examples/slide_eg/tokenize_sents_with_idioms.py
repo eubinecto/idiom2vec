@@ -1,8 +1,4 @@
-from spacy import load
-from spacy.tokens import Token
-
-from config import NLP_MODEL
-from idiom2vec.slide.utils import IdiomNLP, load_idiom_matcher
+from merge_idioms.builders import MIPBuilder
 from termcolor import colored
 
 # sentences to test
@@ -24,23 +20,22 @@ SENTENCES = (
 
 
 def main():
-    nlp = load(NLP_MODEL)
-    idiom_matcher = load_idiom_matcher()
-    # this wrapper class
-    idiom_nlp = IdiomNLP(nlp, idiom_matcher)
-
+    mip_builder = MIPBuilder()
+    mip_builder.construct()
+    mip = mip_builder.mip
     for sent in SENTENCES:
-        doc = idiom_nlp(sent)
+        doc = mip(sent)
         lemmas = [token.lemma_ for token in doc]
         poses = [token.pos_ for token in doc]
-        lex_ids = [token.lex_id for token in doc]
+        # don't use lex_ids. THat's not the one.
+        lemma_id = [token.lemma for token in doc]
         tags = [token.tag_ for token in doc]
-        for lemma, poses, lex_ids, tag in zip(lemmas, poses, lex_ids, tags):
+        for lemma, poses, lemma_id, tag in zip(lemmas, poses, lemma_id, tags):
             if tag == "IDIOM":
                 colored_lemma = colored(lemma, 'magenta')
             else:
                 colored_lemma = colored(lemma, 'blue')
-            print("({}, {}, {}, {}),".format(colored_lemma, poses, str(lex_ids), tag), end=" ")
+            print("({}, {}, {}, {}),".format(colored_lemma, poses, str(lemma_id), tag), end=" ")
         print("\n##########")
 
 

@@ -1,5 +1,5 @@
 from spacy import load
-from config import NLP_MODEL
+from idiom2vec.config import NLP_MODEL
 from termcolor import colored
 
 from idiom2vec.slide.utils import load_idiom_matcher, IdiomNLP

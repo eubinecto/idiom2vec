@@ -90,6 +90,7 @@ pass merging for:on the table
 done:50001
 
 ```
+-> I've fixed that. That took quite a time.
 
 ## SLA reading - notes
 Input's and outputs. That's what I want.

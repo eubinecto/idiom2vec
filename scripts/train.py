@@ -1,7 +1,6 @@
-from idiom2vec.opensub.utils import OpenSubCorpus
-from idiom2vec.slide.utils import IdiomNLP, load_idiom_matcher
-from config import NLP_MODEL, IDIOM2VEC_PKL_PATH
-from spacy import load
+from merge_idioms.builders import MIPBuilder
+from idiom2vec.utils import OpenSubCorpus
+from idiom2vec.config import IDIOM2VEC_PKL_PATH
 import logging
 import sys
 import gensim
@@ -10,10 +9,9 @@ logging.basicConfig(stream=sys.stdout, level=logging.INFO)
 
 def main():
     # prepare the corpus
-    nlp = load(NLP_MODEL)
-    idiom_matcher = load_idiom_matcher()
-    idiom_nlp = IdiomNLP(nlp, idiom_matcher)
-    opensub_corpus = OpenSubCorpus(idiom_nlp)
+    mip_builder = MIPBuilder()
+    mip_builder.construct()
+    opensub_corpus = OpenSubCorpus(mip_builder.mip)
     # start training.. well you don't see any progress.. why?
     word2vec = gensim.models.Word2Vec(sentences=opensub_corpus, workers=10)
     print("training done")

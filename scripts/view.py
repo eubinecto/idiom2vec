@@ -1,4 +1,4 @@
-from config import IDIOM2VEC_PKL_PATH
+from idiom2vec.config import IDIOM2VEC_PKL_PATH
 from gensim import models
 
 
@@ -10,5 +10,6 @@ def main():
 
 if __name__ == '__main__':
    main()
+
 
 

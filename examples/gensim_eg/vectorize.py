@@ -10,7 +10,7 @@ import logging
 from sys import stdout
 from termcolor import colored
 from os import path
-from config import GENSIM_PG_DIR
+from idiom2vec.config import GENSIM_PG_DIR
 logging.basicConfig(stream=stdout, level=logging.INFO)
 # Here, we make sure that all strings are unicode strings so that
 # we can use spaCy for preprocessing

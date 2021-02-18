@@ -2,7 +2,7 @@
 import logging
 import pandas as pd
 import argparse
-from config import DELIM
+from idiom2vec.config import DELIM
 
 
 def count_ids(subs_ids_tsv_path: str, out_path: str):

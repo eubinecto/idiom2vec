@@ -1,8 +1,7 @@
 from typing import Generator, List
-from config import NDJSON_SAMPLES_PATH, SUBS_PATH
+from spacy import Language
+from idiom2vec.config import NDJSON_SAMPLES_PATH, SUBS_PATH
 import json
-
-from idiom2vec.slide.utils import IdiomNLP
 
 
 # load functions for training from samples
@@ -38,8 +37,8 @@ def load_subs_tokenized() -> Generator[List[str], None, None]:
 
 
 class OpenSubCorpus:
-    def __init__(self, idiom_nlp: IdiomNLP):
-        self.idiom_nlp = idiom_nlp
+    def __init__(self, mip: Language):
+        self.mip = mip
 
     def __iter__(self) -> Generator[List[str], None, None]:
         return load_subs_tokenized()
