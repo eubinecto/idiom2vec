@@ -33,7 +33,7 @@ is concerned, I don't need them.
 
 ## 29th of March 2021
 
-> How do I tune hyperparameters for Word2Vec?
+> How do I optimize hyperparameters for Word2Vec?
 
 How many epochs should I do? Would visualising the loss help?
 
@@ -59,3 +59,132 @@ You should either increase the learning rate, or...
 increase the epoch size.
 
 Let's try 50 epochs.
+
+with 50 epochs, and with the same values for other hyper parmas, we get:
+![](.journal_images/b15c52e3.png)
+
+Okay, so optimizing epochs is important. (gradient steps.).
+
+
+How does the model (v: 0.0.1) perform? 
+
+here are some examples. 
+
+First, top 30 nearest neighbours to *catch-22*:
+```text
+mockingbird 0.846593976020813
+blurb 0.7274305820465088
+heady 0.7145246267318726
+McGowan 0.6060003042221069
+STEPHEN 0.5927042365074158
+Disgrace 0.5844409465789795
+Gunslinger 0.5816043615341187
+optione 0.5808339715003967
+Fortier 0.5619481205940247
+2:26 0.561066746711731
+malevolence 0.5591676831245422
+disenchantment 0.5511950850486755
+Stick 0.5503585934638977
+Sandman 0.5494344830513
+gnu 0.5482770800590515
+spanking 0.5407834053039551
+verbiage 0.5344424843788147
+Python 0.5328793525695801
+Milano 0.5297505855560303
+artform 0.5255012512207031
+Kohanikoa 0.525132954120636
+creamsicle 0.5239585041999817
+COLBERT 0.5236631035804749
+Grazer 0.5228258371353149
+Shmuley 0.5200979709625244
+funny 0.5200240612030029
+H.L. 0.519676148891449
+Kambree 0.5190245509147644
+Tyrannosaurus 0.5185222029685974
+Rabbi 0.5180768370628357
+```
+mockingbird? does that even relate to catch-22?
+
+Apaarently, it does! - https://erupprecht.wordpress.com/2014/04/05/caught-up-in-catch-22/
+- "So while Mockingbird was teaching us lessons about becoming moral, upright young people,
+  Catch-22 was schooling us about being skeptical 
+  and questioning authority and suspecting people’s motives and seeing life through a corrective lens of irony."
+  
+
+**blurb** also kind of makes sense. Catch-22 situation is blurry. You can't come up with a clear plan to get out of it
+right away.
+
+
+as for "as long as" and "you name it":
+```text
+###as long as
+curvy 0.5538508892059326
+24:16 0.5279868245124817
+24:19 0.5275934934616089
+Moor 0.526692807674408
+sturdy 0.5156881809234619
+jawline 0.5061637163162231
+14:10:13 0.49112531542778015
+chokehold 0.4875207245349884
+siphon 0.48191559314727783
+shmight 0.48048242926597595
+circle the wagons 0.4798296093940735
+spectrophilia 0.4797925055027008
+wallow 0.47773924469947815
+-lpn 0.47649553418159485
+prat 0.4730754792690277
+Fall 0.4722538888454437
+fantasty 0.46990111470222473
+01:50:00 0.46963149309158325
+wrongheade 0.46956199407577515
+audit 0.4692993760108948
+trickiness 0.46316853165626526
+pro 0.46161550283432007
+preserver 0.46094486117362976
+unjustly 0.4592549502849579
+promulgation 0.4551284611225128
+Mara 0.45480120182037354
+15:25:07and 0.4535512626171112
+technically 0.45197156071662903
+realignment 0.45109450817108154
+trillion- 0.45076754689216614
+
+###you name it
+crisscross 0.5858334898948669
+gooseberry 0.5526860356330872
+36:11 0.5420896410942078
+Pergola 0.5144903659820557
+Peeples 0.4617049992084503
+36:07 0.4599993824958801
+KAMAU 0.4550372064113617
+36:09 0.4530431032180786
+Baptist 0.4511703848838806
+BELL 0.4427003562450409
+screenwrite 0.44157156348228455
+Baidwan 0.4401493966579437
+Sanjeet 0.43733131885528564
+reputational 0.4359336495399475
+Chicagoan 0.43570294976234436
+Thorpe 0.4348847568035126
+00:05:09 0.4343339800834656
+watering 0.43375450372695923
+-Rancher 0.43133974075317383
+Tug 0.4290827810764313
+Toots 0.428454726934433
+trodden 0.42670583724975586
+Merica 0.42670518159866333
+@!JAPAN'S 0.4257393479347229
+BABE 0.4253920316696167
+Ontario 0.4237334728240967
+Viggo 0.42328235507011414
+Tupper 0.42256754636764526
+Mortensen 0.42186954617500305
+reliability 0.42113417387008667
+
+```
+
+hmm... don't know about that.
+Hey, maybe I could use pretrained word2vec to continue training mine? 
+
+yes, you could, but let's leave that for the next iteration. For now, just use this premature model.
+

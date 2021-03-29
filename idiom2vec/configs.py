@@ -18,3 +18,6 @@ SPOK_2017_TRAIN_SPLITS_FS_MANIFEST_CSV = SPOK_2017_TRAIN_SPLITS_DIR.joinpath('fs
 
 # configs for file split
 SPLIT_SIZE = 200000
+
+# Idiom2vec files
+IDIOM2VEC_001_MODEL = IDIOM2VEC_DIR.joinpath('idiom2vec_001.model')  # 0.0.1  (10 epochs -> 20 epochs)
