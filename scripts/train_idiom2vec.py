@@ -66,7 +66,9 @@ def main():
     # the corpus that are streamed.
     corpus = Spok2017()
     # instantiate the model.
-    model = Word2Vec(sentences=corpus, **PARAMS, callbacks=[Idiom2VecCallback()])
+    model = Word2Vec(sentences=corpus,
+                     **PARAMS,
+                     callbacks=[Idiom2VecCallback()])
     # save the model, after training it.
     save_path = str(IDIOM2VEC_DIR.joinpath("{}.model".format(now_str())))
     model.save(save_path)

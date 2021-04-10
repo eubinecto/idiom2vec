@@ -188,3 +188,9 @@ Hey, maybe I could use pretrained word2vec to continue training mine?
 
 yes, you could, but let's leave that for the next iteration. For now, just use this premature model.
 
+what next? go back to idiomify project. Now, build an idiom classifier.
+Build a training set first. (definition, embedding) pairs.
+
+
+For that, we will need a pretrained bert.
+Go have a look. How you could use pretrained ones to train yours.
