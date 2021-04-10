@@ -111,7 +111,8 @@ def main():
         if split_path.endswith(".txt")
     ]
     paths = [
-        args.coca_train_splits_dir + "/" + split_origin_path.split("/")[-1].replace(".txt", ".ndjson")
+        (split_origin_path,
+         args.coca_train_splits_dir + "/" + split_origin_path.split("/")[-1].replace(".txt", ".ndjson"))
         for split_origin_path in split_origin_paths
     ]
 
