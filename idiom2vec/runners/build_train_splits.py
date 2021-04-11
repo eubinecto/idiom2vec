@@ -1,14 +1,14 @@
 """
 this is the main script, that will take ages, for sure.
 """
-import csv
 from typing import List, Tuple
 from identify_idioms.service import build_iip
-import json
-import re
-import os
 from multiprocessing import Pool
 import argparse
+import json
+import csv
+import os
+import re
 
 
 # the tokenizer to use.
@@ -92,27 +92,32 @@ def main():
     parser.add_argument('--num_workers',
                         type=int,
                         default=12)
-    parser.add_argument('--coca_origin_splits_dir',
+    parser.add_argument('--origin_splits_dir',
                         type=str,
                         default="../data/coca/origin_splits")
-    parser.add_argument('--coca_train_splits_dir',
+    parser.add_argument('--train_splits_dir',
                         type=str,
                         default="../data/coca/train_splits")
-    parser.add_argument('--coca_train_splits_fs',
+    parser.add_argument('--train_splits_fs_path',
                         type=str,
                         default="../data/coca/train_splits/fs_manifest.csv")
     args = parser.parse_args()
 
+    # make sure to halt this if you already have the splits...
+    # just in case....
+    if len(os.listdir(args.train_splits_dir)) > 1:
+        raise ValueError("train_splits already exist")
+
     global HEADER
     # first, get all the txt splits
     split_origin_paths = [
-        args.coca_origin_splits_dir + "/" + split_path
-        for split_path in os.listdir(args.coca_origin_splits_dir)
+        args.origin_splits_dir + "/" + split_path
+        for split_path in os.listdir(args.origin_splits_dir)
         if split_path.endswith(".txt")
     ]
     paths = [
         (split_origin_path,
-         args.coca_train_splits_dir + "/" + split_origin_path.split("/")[-1].replace(".txt", ".ndjson"))
+         args.train_splits_dir + "/" + split_origin_path.split("/")[-1].replace(".txt", ".ndjson"))
         for split_origin_path in split_origin_paths
     ]
 
@@ -121,21 +126,21 @@ def main():
         mp.map(process_split, paths)
 
     # then build the train_split manifests
-    with open(args.coca_train_splits_fs, 'w') as fh:
+    with open(args.train_splits_fs_path, 'w') as fh:
         csv_writer = csv.writer(fh)
         csv_writer.writerow(HEADER)  # write the header
         # get all the filenames of the splits.
 
         filenames = [
             name
-            for name in os.listdir(args.coca_train_splits_dir)
+            for name in os.listdir(args.train_splits_dir)
             if name.endswith('.ndjson')
         ]
         filenames = sorted(filenames,
                            key=lambda x: int(re.findall(r'_([0-9]+).ndjson', x)[0]),
                            reverse=False)
         file_sizes = [
-            os.path.getsize(args.coca_train_splits_dir + "/" + name)
+            os.path.getsize(args.train_splits_dir + "/" + name)
             for name in filenames
         ]
 

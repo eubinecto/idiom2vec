@@ -194,3 +194,46 @@ Build a training set first. (definition, embedding) pairs.
 
 For that, we will need a pretrained bert.
 Go have a look. How you could use pretrained ones to train yours.
+
+
+## 11st of April, 2021
+
+as for each version, we save three files. 
+1. idiom2vec_$$$.model
+  - we are keeping this so that we can see which words are similar to 
+   a given idiom.
+2. idiom2vec_light_$$$.kv  -> this only saves the vectors for the idioms.
+  - we are saving this so that we can evaluate idiomifier much faster.
+3. idiom2vec_$$$.log
+  - we are saving this so that we can parse it and thereby plot the loss-over-epoch
+   graph.
+   
+
+what is your next goal? The next goal is to...
+1. count the occurrences of idioms, and plot it.
+  - this will be used as an evaluation metric for the
+  sufficiency of the data.
+2. save `idiom2vec_light_$$$.kv` in resources, version-control it.
+  - this shouldn't be a huge hassle. 
+3. Implement `most_similar_idioms_by_key`, `most_similar_idioms_by_vector`
+  - most urgently need the later one.
+  - this gets use of `idiom2vec_light_$$$.kv`. 
+  - this operation must be fast.
+
+pretrained weights를 활용하는 건. 나중에 해보자구.
+
+일단... 사용할 pretrained weights에 맞추어서. 임베딩의 크기를 정하자. 그게 나을듯 싶다.
+
+Okay, so what is it that you want to do now?
+You want to submit a job. That's what you want.
+
+주체적인 수학자가 목표. proactive mathematician.
+
+So, what's your plan now? 
+
+1. sync coca_spok data. (from server to local)
+   - why? so that we can test them on local.
+2. complete build_coca_mag.sh.
+   - make sure you check eta.
+3. submit job on the server. (workers=12)
+In the meanwhile, we work on the training script.
