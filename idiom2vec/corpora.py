@@ -1,6 +1,7 @@
 """
 Corpora.
 """
+# 아.. 이것들을 구현을 해야하는데 말이지.
 
 
 class CocaSpok:

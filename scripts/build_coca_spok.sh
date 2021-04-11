@@ -16,6 +16,8 @@ python3 ../idiom2vec/runners/build_origin_splits.py \
   --origin_splits_dir=$ORIGIN_SPLITS_DIR
 ## tokenise the splits
 python3 ../idiom2vec/runners/build_train_splits.py \
+  --num_workers=12 \
+  --corpus_name="coca_spok" \
   --origin_splits_dir=$ORIGIN_SPLITS_DIR \
   --train_splits_dir=$TRAIN_SPLITS_DIR \
   --train_splits_fs_path=$TRAIN_SPLITS_FS_TSV_PATH

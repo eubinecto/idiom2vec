@@ -1,8 +1,9 @@
 """
 this is the main script, that will take ages, for sure.
 """
-from typing import List, Tuple
+from typing import List, Tuple, Optional
 from identify_idioms.service import build_iip
+from idiom2vec.cleaners import Cleaner, CocaSpokCleaner, CocaMagCleaner
 from multiprocessing import Pool
 import argparse
 import json
@@ -10,60 +11,20 @@ import csv
 import os
 import re
 
-
-# the tokenizer to use.
+# --- global vars --- #
 iip = build_iip()
-
-HEADER = "filename,filesize,encoding,header".split(",")
-
-
-def remove_labels(line: str) -> str:
-    """
-    e.g. @@4171106
-    """
-    return re.sub(r'[0-9]{7} ', "", line).strip()
-
-
-def replace_profanities(line: str) -> str:
-    """
-    e.g. they will add @ @ @ @ @ @ @ @ @ @ over the next
-    """
-    return line.replace('@ @ @ @ @ @ @ @ @ @', 'PROFANITY').strip()
-
-
-def remove_nonverbals(line: str) -> str:
-    """
-    e.g. 10 minutes ( ph ) have
-    """
-    return re.sub(r'\(.+?\)', "", line).strip()
-
-
-def remove_speakers(line: str) -> str:
-    """
-    e.g. @!DAVID-GREENE#
-    e.g. -MTP-DA#
-    """
-    line = re.sub(r'@![a-zA-Z-]+# |@![a-zA-Z-]+ ', "", line).strip()
-    line = re.sub(r'[A-Z-]+#', "", line).strip()
-    return line
-
-
-def cleanse(line: str) -> str:
-    line = remove_labels(line)
-    line = replace_profanities(line)
-    line = remove_speakers(line)
-    line = remove_nonverbals(line)
-    return line
+cleaner: Optional[Cleaner] = None  # to be filled
 
 
 def process_line(line: str) -> List[str]:
     """
     tokenise, lemmatise, filter out.
     """
-    global iip
+    global iip, cleaner
+    cleaned = cleaner(line)
     processed = [
         token.lemma_  # lemmatise
-        for token in iip(line)  # tokenise
+        for token in iip(cleaned)  # tokenise
         if len(token.text) > 1  # should be longer than 1
         if not token.is_stop  # don't need stop words
         if not token.is_punct  # don't need punctuations
@@ -74,42 +35,46 @@ def process_line(line: str) -> List[str]:
 
 def process_split(paths: Tuple[str, str]):
     # path to train split
+    global cleaner
     split_origin_path = paths[0]
     split_train_path = paths[1]
     # open one for reading in, one to write the processed file to
     with open(split_origin_path, 'r') as fh_r, open(split_train_path, 'w') as fh_w:
         for line in fh_r:
-            cleansed = cleanse(line)
-            tokens = process_line(cleansed)
+            tokens = process_line(line)
             # write the tokens - newline delimited jsons
             fh_w.write(json.dumps(tokens) + "\n")
-
     print("Done:" + str(split_origin_path))
 
 
 def main():
+    global cleaner
     parser = argparse.ArgumentParser()
     parser.add_argument('--num_workers',
-                        type=int,
-                        default=12)
+                        type=int)
+    parser.add_argument('--corpus_name',
+                        type=str)
     parser.add_argument('--origin_splits_dir',
-                        type=str,
-                        default="../data/coca/origin_splits")
+                        type=str)
     parser.add_argument('--train_splits_dir',
-                        type=str,
-                        default="../data/coca/train_splits")
+                        type=str)
     parser.add_argument('--train_splits_fs_path',
-                        type=str,
-                        default="../data/coca/train_splits/fs_manifest.csv")
+                        type=str)
     args = parser.parse_args()
 
-    # make sure to halt this if you already have the splits...
-    # just in case....
+    # --- prevent overwriting --- #
     if len(os.listdir(args.train_splits_dir)) > 1:
         raise ValueError("train_splits already exist")
 
-    global HEADER
-    # first, get all the txt splits
+    # --- init the cleaner --- #
+    if args.corpus_name == "coca_spok":
+        cleaner = CocaSpokCleaner()
+    elif args.corpus_name == "coca_mag":
+        cleaner = CocaMagCleaner()
+    else:
+        raise ValueError("Invalid corpus name:" + args.corpus_name)
+
+    # --- prepare the read & write paths --- #
     split_origin_paths = [
         args.origin_splits_dir + "/" + split_path
         for split_path in os.listdir(args.origin_splits_dir)
@@ -121,11 +86,12 @@ def main():
         for split_origin_path in split_origin_paths
     ]
 
-    # multiprocessing.
+    # --- execute the process with multiprocessing --- #
     with Pool(args.num_workers) as mp:
         mp.map(process_split, paths)
 
-    # then build the train_split manifests
+    # --- build the manifest tsv --- #
+    HEADER = "filename,filesize,encoding,header".split(",")
     with open(args.train_splits_fs_path, 'w') as fh:
         csv_writer = csv.writer(fh)
         csv_writer.writerow(HEADER)  # write the header

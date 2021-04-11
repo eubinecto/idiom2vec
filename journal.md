@@ -220,7 +220,7 @@ what is your next goal? The next goal is to...
   - this gets use of `idiom2vec_light_$$$.kv`. 
   - this operation must be fast.
 
-pretrained weights를 활용하는 건. 나중에 해보자구.
+pretrained weights를 활용하는 건. 나중에 해보자구. 제일 마지막에 해볼 것.
 
 일단... 사용할 pretrained weights에 맞추어서. 임베딩의 크기를 정하자. 그게 나을듯 싶다.
 
@@ -231,9 +231,11 @@ You want to submit a job. That's what you want.
 
 So, what's your plan now? 
 
-1. sync coca_spok data. (from server to local)
+1. sync coca_spok data. (from server to local): done
    - why? so that we can test them on local.
-2. complete build_coca_mag.sh.
+2. complete build_coca_mag.sh.: done
    - make sure you check eta.
-3. submit job on the server. (workers=12)
+3. refactoring: cleansers.
+   - domain-specific cleansing.
+4. submit job on the server. (workers=12)
 In the meanwhile, we work on the training script.
