@@ -30,7 +30,7 @@ def process_line(line: str) -> List[List[str]]:
     # list of list of tokens. This is what we want.
     sents_processed = [
         [
-            token.lemma_.replace(" ", "_") if token._is_idiom else token.lemma_  # lemmatise them.
+            token.lemma_.replace(" ", "_") if token._.is_idiom else token.lemma_  # lemmatise them.
             for token in iip(sent)
             if len(token.text) > 1  # should be longer than 1
             if not token.is_stop  # don't need stop words
@@ -105,9 +105,12 @@ def main():
     ]
 
     # --- execute the process with multiprocessing --- #
-    with Pool(args.num_workers) as mp:
-        # run it asynchronously. This is more important.
-        mp.map_async(process_split, paths)
+    # https://stackoverflow.com/a/46843159
+    p = Pool(args.num_workers)
+    # run it asynchronously. This is more important.
+    p.map_async(process_split, paths)
+    p.close()
+    p.join()
 
     # --- build the manifest tsv --- #
     HEADER = "filename,filesize,encoding,header".split(",")
