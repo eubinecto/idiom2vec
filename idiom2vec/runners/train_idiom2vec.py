@@ -2,14 +2,13 @@
 trains an idiom2vec model.
 """
 from gensim.models import Word2Vec
-import logging
-from sys import stdout
-from datetime import datetime
 from gensim.models.callbacks import CallbackAny2Vec
-from idiom2vec.configs import IDIOM2VEC_DIR
-from idiom2vec.corpora import CocaSpok, CocaFict
+from idiom2vec.corpora import Coca
+from sys import stdout
 from matplotlib import pyplot as plt
 import argparse
+import logging
+
 logging.basicConfig(stream=stdout, level=logging.INFO)
 
 
@@ -72,22 +71,28 @@ def main():
                         dest='compute_loss',
                         default=False,
                         action='store_true')
-
-    # the paths
+    # document = sent? document = article?
+    parser.add_argument('--doc_is_sent',
+                        dest='doc_is_sent',
+                        default=False,
+                        action='store_true')
+    # the files to save
     parser.add_argument('--log_path',
-                        type=str,
-                        default=...)
+                        type=str)
     parser.add_argument('--idiom2vec_model_path',
-                        type=str,
-                        default=...)
+                        type=str)
     parser.add_argument('--idiom2vec_light_kv_path',
-                        type=str,
-                        default=...)
+                        type=str)
+    # the corpora to load
+    parser.add_argument('--coca_spok_train_ndjson_path',
+                        type=str)
+    # parser.add_argument('--coca_mag_train_ndjson_path',
+    #                     type=str)
     args = parser.parse_args()
 
     # --- params setup --- #
     # the parameters to pass to word2vec.
-    params = {
+    w2v_params = {
         'vector_size': args.vector_size,
         'window': args.window_size,
         'min_count': args.min_count,
@@ -101,22 +106,16 @@ def main():
     logger = logging.getLogger("train_idiom2vec")
 
     # --- prepare the corpus --- #
-    # the corpus that are streamed.
-    coca_spok = CocaSpok()
-    coca_fict = CocaFict()
-    # TODO: chain the corpus?
-    corpus = ...  # chain corpus.
+    # the corpus that will be streamed
+    coca_spok = Coca(args.coca_spok_train_ndjson_path, args.doc_is_sent)
 
     # --- train the idiom2vec_model
     # instantiate the idiom2vec_model.
-    idiom2vec_model = Word2Vec(sentences=corpus,
-                               **params,
+    idiom2vec_model = Word2Vec(**w2v_params,
+                               sentences=coca_spok,
                                callbacks=[Idiom2VecCallback()])
     # save the idiom2vec_model, after training it.
     idiom2vec_model.save(args.idiom2vec_model_path)
-
-    # TODO: then, save idiom2vec_light.kv.
-
 
 
 if __name__ == '__main__':

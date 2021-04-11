@@ -28,7 +28,7 @@ class CocaCleaner(Cleaner):
 
     @staticmethod
     def remove_labels(line: str) -> str:
-        return re.sub(r'^@@[0-9]{7} |^##@@[0-9]{7}', "", line).strip()
+        return re.sub(r'^@@[0-9]+? |^##[0-9]+? ', "", line).strip()
 
     @staticmethod
     def replace_profanities(line: str) -> str:

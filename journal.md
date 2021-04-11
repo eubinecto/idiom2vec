@@ -239,3 +239,21 @@ So, what's your plan now?
    - domain-specific cleansing.
 4. submit job on the server. (workers=12)
 In the meanwhile, we work on the training script.
+   
+Important:
+- https://datascience.stackexchange.com/questions/8753/what-is-a-better-input-for-word2vec
+- Should each document = sentence? or should each be individual sentences?
+- document = sentence -> more focus on the meaning of words  -> 너가 원하는 것은 여기에
+- document = article, or a paragraph -> window large -> more 
+  - 수학적인 이유? 이 문서에 대하여 loss를 구해서? 그건 context window 아닌가? 이게 궁금하다.
+
+Oh man. This whole time you've been ignoring that, when this could have been a great thing to experiment on.
+Something like that. You may want to see if sentence vs. document would be of help in anyways.
+
+Okay, so as for tonight, you need to tokenize them into sentences!
+일단... 음... you need to split them up. Ah, data processing yet again.
+
+아, 이거 골치아프네. 일단 지금은 훈련에 집중해보자.
+complete을 하긴 해야함.
+sentence로 split하는 스크립트만 일단 째보자.
+

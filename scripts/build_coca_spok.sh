@@ -12,7 +12,7 @@ python3 ../idiom2vec/runners/build_origin.py \
 ## split the original corpus into small files
 python3 ../idiom2vec/runners/build_origin_splits.py \
   --origin_txt_path=$ORIGIN_TXT_PATH \
-  --split_size=20000 \
+  --split_size=200000 \
   --origin_splits_dir=$ORIGIN_SPLITS_DIR
 ## tokenise the splits
 python3 ../idiom2vec/runners/build_train_splits.py \

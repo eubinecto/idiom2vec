@@ -1,34 +1,39 @@
 """
-Corpora.
+Corpora to be used for training.
 """
-# 아.. 이것들을 구현을 해야하는데 말이지.
+import json
+from typing import Generator, List
 
 
-class CocaSpok:
-    """
-    coca - from spoken context.
-    """
+class Corpus:
+    def __init__(self, train_ndjson_path: str, doc_is_sent: bool = True):
+        self.train_ndjson_path = train_ndjson_path
+        self.doc_is_sent = doc_is_sent
+
     def __iter__(self):
-        pass
+        raise NotImplementedError
 
 
-class CocaFict:
-    """
-    coca - from fictions
-    """
-    def __iter__(self):
-        pass
+class Coca(Corpus):
+    def __iter__(self) -> Generator[List[str], None, None]:
+        with open(self.train_ndjson_path, 'r') as fh:
+            for line in fh:
+                sents = json.loads(line)
+                if self.doc_is_sent:
+                    # this will be a list of lists.
+                    for sent in sents:
+                        yield sent
+                else:
+                    # flatten out the list of lists
+                    article = [
+                        token
+                        for sent in sents
+                        for token in sent
+                        ]
+                    yield article
 
 
-class CocaMag:
-    """
-    coca - from magazines
-    """
-    def __iter__(self):
-        pass
-
-
-class Opensub:
+class Opensub(Corpus):
     """
     open subtitles.
     """
@@ -36,8 +41,10 @@ class Opensub:
         pass
 
 
-class Bns:
+class Bns(Corpus):
     """
     british national corpus
     """
-    pass
+
+    def __iter__(self):
+        pass

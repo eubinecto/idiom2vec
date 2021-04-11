@@ -12,30 +12,39 @@ import os
 import re
 
 # --- global vars --- #
-iip = build_iip()
-cleaner: Optional[Cleaner] = None  # to be filled
+iip = build_iip()  # identify-idioms pipeline
+cleaner: Optional[Cleaner] = None  # domain-specific cleaner
+total: Optional[int] = None  # to be used for progress tracking
+train_splits_dir: Optional[str] = None  # to be used for progress tracking
 
 
-def process_line(line: str) -> List[str]:
+def process_line(line: str) -> List[List[str]]:
     """
-    tokenise, lemmatise, filter out.
+    split into sentences.
+    Tokenise each sentence.
+    Lemmatise and clean each token in the sentence.
     """
     global iip, cleaner
     cleaned = cleaner(line)
-    processed = [
-        token.lemma_  # lemmatise
-        for token in iip(cleaned)  # tokenise
-        if len(token.text) > 1  # should be longer than 1
-        if not token.is_stop  # don't need stop words
-        if not token.is_punct  # don't need punctuations
-        if not token.like_num  # don't need numbers
+    sents = cleaned.split(".")
+    # list of list of tokens. This is what we want.
+    sents_processed = [
+        [
+            token.lemma_  # lemmatise them.
+            for token in iip(sent)
+            if len(token.text) > 1  # should be longer than 1
+            if not token.is_stop  # don't need stop words
+            if not token.is_punct  # don't need punctuations
+            if not token.like_num  # don't need numbers
+        ]
+        for sent in sents
     ]
-    return processed
+    return sents_processed
 
 
 def process_split(paths: Tuple[str, str]):
     # path to train split
-    global cleaner
+    global cleaner, total, train_splits_dir
     split_origin_path = paths[0]
     split_train_path = paths[1]
     # open one for reading in, one to write the processed file to
@@ -44,11 +53,16 @@ def process_split(paths: Tuple[str, str]):
             tokens = process_line(line)
             # write the tokens - newline delimited jsons
             fh_w.write(json.dumps(tokens) + "\n")
-    print("Done:" + str(split_origin_path))
+
+    # tracking progress here.
+    print("Finished:" + str(split_origin_path))
+    done = len(os.listdir(train_splits_dir))
+    print("Progress: {} / {}".format(done, total))
 
 
 def main():
-    global cleaner
+    global cleaner, total, train_splits_dir
+
     parser = argparse.ArgumentParser()
     parser.add_argument('--num_workers',
                         type=int)
@@ -65,6 +79,10 @@ def main():
     # --- prevent overwriting --- #
     if len(os.listdir(args.train_splits_dir)) > 1:
         raise ValueError("train_splits already exist")
+
+    # --- init the global vars --- #
+    total = len(os.listdir(args.origin_splits_dir))
+    train_splits_dir = args.train_splits_dir
 
     # --- init the cleaner --- #
     if args.corpus_name == "coca_spok":

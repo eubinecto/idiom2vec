@@ -9,11 +9,9 @@ def main():
                         type=int,
                         default=200000)
     parser.add_argument('--origin_txt_path',
-                        type=str,
-                        default=...)
+                        type=str)
     parser.add_argument('--origin_splits_dir',
-                        type=str,
-                        default=...)
+                        type=str)
     args = parser.parse_args()
     fs = Filesplit()
     fs.split(file=args.origin_txt_path,
