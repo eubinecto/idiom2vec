@@ -13,7 +13,7 @@ def main():
     args = parser.parse_args()
     # get all the files
     files = glob.glob(str(args.corpora_dir) + "/*.txt", recursive=True)
-    with open(args.corpora_dir, "w") as outfile:
+    with open(args.origin_txt_path, "w") as outfile:
         for f in files:
             with open(f, "r") as infile:
                 outfile.write(infile.read())
