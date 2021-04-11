@@ -4,12 +4,14 @@ trains an idiom2vec model.
 from gensim.models import Word2Vec
 from gensim.models.callbacks import CallbackAny2Vec
 from idiom2vec.corpora import Coca
+from identify_idioms.service import load_idioms
 from sys import stdout
 from matplotlib import pyplot as plt
 import argparse
 import logging
-
 logging.basicConfig(stream=stdout, level=logging.INFO)
+# you want to setup the loggers.
+# TODO: check the kalah_bot project for this.
 
 
 # to be used for printing out the loss
@@ -24,10 +26,11 @@ class Idiom2VecCallback(CallbackAny2Vec):
         this will be called at the end of each epoch.
         """
         loss = model.get_latest_training_loss()
-        print('Loss after epoch {}: {}'.format(self.epoch, loss))
         self.epoch += 1
         self.losses.append(loss)
-        self.visualise_loss()  # plot the loss
+        print('Cumulative loss after epoch {}: {}'.format(self.epoch, loss))
+        print('Offset to previous loss: {}'.format(str(self.losses[-1] - self.losses[-2])))
+        self.visualise_loss()  # plot the loss   # this would probably not work in command line. in the server.
 
     def visualise_loss(self):
         # x = epoch
@@ -45,7 +48,7 @@ def main():
     # the size of the embedding vector.
     parser.add_argument('--vector_size',
                         type=int,
-                        default=100)
+                        default=300)
     # the size of the window
     parser.add_argument('--window',
                         type=int,
@@ -81,7 +84,7 @@ def main():
                         type=str)
     parser.add_argument('--idiom2vec_model_path',
                         type=str)
-    parser.add_argument('--idiom2vec_light_kv_path',
+    parser.add_argument('--idionly2vec_kv_path',
                         type=str)
     # the corpora to load
     parser.add_argument('--coca_spok_train_ndjson_path',
@@ -109,13 +112,33 @@ def main():
     # the corpus that will be streamed
     coca_spok = Coca(args.coca_spok_train_ndjson_path, args.doc_is_sent)
 
-    # --- train the idiom2vec_model
+    # --- train idiom2vec --- #
     # instantiate the idiom2vec_model.
     idiom2vec_model = Word2Vec(**w2v_params,
                                sentences=coca_spok,
                                callbacks=[Idiom2VecCallback()])
     # save the idiom2vec_model, after training it.
     idiom2vec_model.save(args.idiom2vec_model_path)
+
+    # --- save idionly2vec --- #
+    idioms = [
+        idiom
+        for idiom in load_idioms()  # get this from identify idioms lib.
+        if idiom2vec_model.wv.key_to_index.get(idiom, None)
+    ]
+    idiom_vectors = [
+        idiom2vec_model.wv.get_vector(idiom)
+        for idiom in idioms
+    ]
+    with open(args.idionly2vec_kv_path, 'w') as fh:
+        # the first line is vocab_size dim_size
+        # e.g. 1999995 300
+        fh.write(" ".join([len(idioms), args.vector_size]) + "\n")
+        for idiom, idiom_vec in zip(idioms, idiom_vectors):
+            fh.write(idiom + " ")
+            for comp in idiom_vec:
+                fh.write(str(comp) + " ")  # write each component
+            fh.write("\n")   # end with a new line.
 
 
 if __name__ == '__main__':

@@ -257,3 +257,28 @@ Okay, so as for tonight, you need to tokenize them into sentences!
 complete을 하긴 해야함.
 sentence로 split하는 스크립트만 일단 째보자.
 
+
+1분에 200000 짜리 스플릿을 10개처리 가능한 성능임.
+이정도면 페이스면,  3732개니까.
+373분. 대략 6시간정도 소요예정이라는 소리....허허. 뭐, 하루종일 걸리는 것보단 나으니까!
+켜놓고 자면 되겠지 뭐. 그렇게 생각하자.
+
+그게 그정도.
+
+
+idiom2vec_001.model에서, most similar를 해봄.
+```commandline
+# --- idioms similar to american dream --- #
+land_of_opportunity 0.4797023832798004
+forbidden_fruit 0.46736130118370056
+matter_of_course 0.4377642869949341
+love_of_one's_life 0.430107444524765
+pain_and_suffering 0.4248839318752289
+move_the_goalposts 0.4180717468261719
+offer_one's_condolences 0.41583359241485596
+heart-breaking 0.4144800007343292
+play_it_safe 0.4144169092178345
+under_the_table 0.409618616104126
+```
+
+land of opportunity! That's interesting.

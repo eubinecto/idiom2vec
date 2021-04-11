@@ -22,13 +22,17 @@ class Coca(Corpus):
                 if self.doc_is_sent:
                     # this will be a list of lists.
                     for sent in sents:
-                        yield sent
+                        # at least two
+                        if len(sent) > 1:
+                            yield sent
                 else:
                     # flatten out the list of lists
                     article = [
                         token
                         for sent in sents
                         for token in sent
+                        # make sure the token is not empty.
+                        if token
                         ]
                     yield article
 
