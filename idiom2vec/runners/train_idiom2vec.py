@@ -20,6 +20,7 @@ class Idiom2VecCallback(CallbackAny2Vec):
     def __init__(self):
         self.epoch = 0
         self.losses = list()  # collect losses here
+        self.losses.append(0.0)
 
     def on_epoch_end(self, model):
         """
@@ -30,7 +31,7 @@ class Idiom2VecCallback(CallbackAny2Vec):
         self.losses.append(loss)
         print('Cumulative loss after epoch {}: {}'.format(self.epoch, loss))
         print('Offset to previous loss: {}'.format(str(self.losses[-1] - self.losses[-2])))
-        self.visualise_loss()  # plot the loss   # this would probably not work in command line. in the server.
+        # self.visualise_loss()  # plot the loss   # this would probably not work in command line. in the server.
 
     def visualise_loss(self):
         # x = epoch
@@ -97,7 +98,7 @@ def main():
     # the parameters to pass to word2vec.
     w2v_params = {
         'vector_size': args.vector_size,
-        'window': args.window_size,
+        'window': args.window,
         'min_count': args.min_count,
         'workers': args.workers,
         'sg': args.sg,
@@ -117,7 +118,8 @@ def main():
     idiom2vec_model = Word2Vec(**w2v_params,
                                sentences=coca_spok,
                                callbacks=[Idiom2VecCallback()])
-    # save the idiom2vec_model, after training it.
+
+    # save idiom2vec
     idiom2vec_model.save(args.idiom2vec_model_path)
 
     # --- save idionly2vec --- #

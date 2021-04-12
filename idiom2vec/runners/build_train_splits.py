@@ -112,30 +112,6 @@ def main():
     p.close()
     p.join()
 
-    # --- build the manifest tsv --- #
-    HEADER = "filename,filesize,encoding,header".split(",")
-    with open(args.train_splits_fs_path, 'w') as fh:
-        csv_writer = csv.writer(fh)
-        csv_writer.writerow(HEADER)  # write the header
-        # get all the filenames of the splits.
-
-        filenames = [
-            name
-            for name in os.listdir(args.train_splits_dir)
-            if name.endswith('.ndjson')
-        ]
-        filenames = sorted(filenames,
-                           key=lambda x: int(re.findall(r'_([0-9]+).ndjson', x)[0]),
-                           reverse=False)
-        file_sizes = [
-            os.path.getsize(args.train_splits_dir + "/" + name)
-            for name in filenames
-        ]
-
-        for name, file_size in zip(filenames, file_sizes):
-            to_write = [name, file_size, "", ""]
-            csv_writer.writerow(to_write)
-
 
 if __name__ == '__main__':
     main()

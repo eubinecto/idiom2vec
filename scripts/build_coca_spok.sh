@@ -20,8 +20,8 @@ python3 ../idiom2vec/runners/build_train_splits.py \
   --corpus_name="coca_spok" \
   --origin_splits_dir=$ORIGIN_SPLITS_DIR \
   --train_splits_dir=$TRAIN_SPLITS_DIR \
-  --train_splits_fs_path=$TRAIN_SPLITS_FS_TSV_PATH
 # merge the tokens into a train-ready file
 python3 ../idiom2vec/runners/merge_train_splits.py \
   --train_splits_dir=$TRAIN_SPLITS_DIR \
+  --train_splits_fs_path=$TRAIN_SPLITS_FS_TSV_PATH \
   --train_ndjson_path=$TRAIN_NDJSON_PATH
