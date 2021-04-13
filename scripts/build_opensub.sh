@@ -11,7 +11,7 @@ python3 ../idiom2vec/runners/build_origin_splits.py \
 ## tokenise the splits
 echo "running build_train_splits.py..."
 python3 ../idiom2vec/runners/build_train_splits.py \
-  --num_workers=6 \
+  --num_workers=8 \
   --corpus_name="opensub" \
 # merge the tokens into a train-ready file
 echo "running merge_train_splits.py..."
