@@ -90,12 +90,6 @@ def main():
                         type=str)
     args = parser.parse_args()
 
-    # --- prevent overwriting --- #
-    if len(os.listdir(args.train_splits_dir)) > 1:
-        raise ValueError("train_splits already exist")
-
-    # --- init the global vars --- #
-    total = len(os.listdir(args.origin_splits_dir))
 
     # --- init the cleaner & paths --- #
     if args.corpus_name == "coca_spok":
@@ -115,6 +109,13 @@ def main():
         process_line_fn = process_line_opensub
     else:
         raise ValueError("Invalid corpus name:" + args.corpus_name)
+
+    # --- prevent overwriting --- #
+    if len(os.listdir(train_splits_dir)) > 1:
+        raise ValueError("train_splits already exist")
+
+    # --- init the global vars --- #
+    total = len(os.listdir(origin_splits_dir))
 
     # --- prepare the read & write paths --- #
     split_origin_paths = [
