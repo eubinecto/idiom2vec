@@ -9,7 +9,7 @@ CORPORA_DIR = path.join(HOME_DIR, "corpora")  # this is always at home.
 COCA_SPOK_DIR = path.join(CORPORA_DIR, "coca_spok")
 COCA_MAG_DIR = path.join(CORPORA_DIR, "coca_mag")
 COCA_FICT_DIR = path.join(CORPORA_DIR, "coca_fict")
-OPENSUB_DIR = path.join(COCA_SPOK_DIR, "opensub")
+OPENSUB_DIR = path.join(CORPORA_DIR, "opensub")
 PROJECT_LIB_DIR = str(Path(__file__).resolve().parent)
 
 # coca_spok
