@@ -5,7 +5,7 @@ python3 ../idiom2vec/runners/train_idiom2vec.py \
     --vector_size=300 \
     --window=10 \
     --min_count=1 \
-    --workers=4 \
+    --workers=46\
     --sg=1 \
     --epochs=50 \
     --compute_loss \

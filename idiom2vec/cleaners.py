@@ -81,3 +81,14 @@ class CocaMagCleaner(CocaCleaner):
     @staticmethod
     def remove_p_tags(line: str) -> str:
         return line.replace("<p>", "").strip()
+
+
+class OpenSubCleaner(Cleaner):
+    def steps(self) -> List[Callable]:
+        return [
+            self.clean
+        ]
+
+    @staticmethod
+    def clean(line: str) -> str:
+        return line   # just pass it.

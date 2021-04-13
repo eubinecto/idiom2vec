@@ -58,6 +58,9 @@ def main():
     parser.add_argument('--min_count',
                         type=int,
                         default=1)
+    parser.add_argument('--alpha',
+                        type=float,
+                        default=0.025)
     # number of workers to use for training word2vec
     parser.add_argument('--workers',
                         type=int,
@@ -99,6 +102,7 @@ def main():
     w2v_params = {
         'vector_size': args.vector_size,
         'window': args.window,
+        'alpha': args.alpha,
         'min_count': args.min_count,
         'workers': args.workers,
         'sg': args.sg,
