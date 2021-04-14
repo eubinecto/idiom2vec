@@ -18,13 +18,8 @@ import re
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--train_splits_dir', type=str,
-                        default="/Users/eubin/corpora/coca_mag/train_splits")
-    parser.add_argument('--train_splits_fs_path', type=str,
-                        default="/Users/eubin/corpora/coca_mag/train_splits/fs_manifest.csv")
-    parser.add_argument('--train_ndjson_path', type=str,
-                        default="/Users/eubin/corpora/coca_mag/train.ndjson")
-    parser.add_argument('--corpus_name', type=str)
+    parser.add_argument('--corpus_name', type=str,
+                        default="opensub")
     args = parser.parse_args()
     
     # --- init the cleaner & paths --- #
@@ -67,6 +62,7 @@ def main():
             to_write = [name, file_size, "", ""]
             csv_writer.writerow(to_write)
 
+    # then merge them into a single file.
     fs = Filesplit()
     fs.merge(input_dir=train_splits_dir, output_file=train_ndjson_path)
 

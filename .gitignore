@@ -17,3 +17,4 @@ corpora
 dist
 build
 idiom2vec.egg-info
+data_idiom2vec

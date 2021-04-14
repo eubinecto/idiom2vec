@@ -3,15 +3,17 @@ trains an idiom2vec model.
 """
 from gensim.models import Word2Vec
 from gensim.models.callbacks import CallbackAny2Vec
-from idiom2vec.corpora import Coca
+from idiom2vec.corpora import IdiomSentences
+from idiom2vec.paths import (
+    IDIOM2VEC_001_BIN,
+    IDIONLY2VEC_001_KV
+)
 from identify_idioms.service import load_idioms
 from sys import stdout
 from matplotlib import pyplot as plt
 import argparse
 import logging
 logging.basicConfig(stream=stdout, level=logging.INFO)
-# you want to setup the loggers.
-# TODO: check the kalah_bot project for this.
 
 
 # to be used for printing out the loss
@@ -49,7 +51,7 @@ def main():
     # the size of the embedding vector.
     parser.add_argument('--vector_size',
                         type=int,
-                        default=300)
+                        default=200)
     # the size of the window
     parser.add_argument('--window',
                         type=int,
@@ -72,29 +74,21 @@ def main():
     # number of epochs.
     parser.add_argument('--epochs',
                         type=int,
-                        default=50)
+                        default=100)
     # compute loss
     parser.add_argument('--compute_loss',
                         dest='compute_loss',
                         default=False,
                         action='store_true')
-    # document = sent? document = article?
-    parser.add_argument('--doc_is_sent',
-                        dest='doc_is_sent',
-                        default=False,
-                        action='store_true')
+
     # the files to save
-    parser.add_argument('--log_path',
-                        type=str)
-    parser.add_argument('--idiom2vec_model_path',
-                        type=str)
-    parser.add_argument('--idionly2vec_kv_path',
-                        type=str)
-    # the corpora to load
-    parser.add_argument('--coca_spok_train_ndjson_path',
-                        type=str)
-    # parser.add_argument('--coca_mag_train_ndjson_path',
-    #                     type=str)
+    parser.add_argument('--model_version',
+                        type=str,
+                        default="001")
+
+    parser.add_argument('--pretrained_model',
+                        type=str,
+                        default="glove-wiki-gigaword-200")
     args = parser.parse_args()
 
     # --- params setup --- #
@@ -110,36 +104,43 @@ def main():
         'compute_loss': args.compute_loss
     }
 
+    # --- paths setup --- #
+    if args.model_version == "001":
+        idiom2vec_bin_path = IDIOM2VEC_001_BIN
+        idionly2vec_kv_path = IDIONLY2VEC_001_KV
+    else:
+        raise
+
     # --- logger setup --- #
     logger = logging.getLogger("train_idiom2vec")
 
     # --- prepare the corpus --- #
     # the corpus that will be streamed
-    coca_spok = Coca(args.coca_spok_train_ndjson_path, args.doc_is_sent)
+    sents = IdiomSentences()
 
-    # --- train idiom2vec --- #
-    # instantiate the idiom2vec_model.
-    idiom2vec_model = Word2Vec(**w2v_params,
-                               sentences=coca_spok,
-                               callbacks=[Idiom2VecCallback()])
+    # --- pre-load the model --- #
+    # train it with idiomatic sentences
+    idiom2vec = Word2Vec(**w2v_params,
+                         sentences=sents,
+                         callbacks=[Idiom2VecCallback()])
 
-    # save idiom2vec
-    idiom2vec_model.save(args.idiom2vec_model_path)
+    # save idiom2vec.
+    idiom2vec.save(idiom2vec_bin_path)
 
     # --- save idionly2vec --- #
     idioms = [
         idiom
         for idiom in load_idioms()  # get this from identify idioms lib.
-        if idiom2vec_model.wv.key_to_index.get(idiom, None)
+        if idiom2vec.wv.key_to_index.get(idiom, None)
     ]
     idiom_vectors = [
-        idiom2vec_model.wv.get_vector(idiom)
+        idiom2vec.wv.get_vector(idiom)
         for idiom in idioms
     ]
-    with open(args.idionly2vec_kv_path, 'w') as fh:
+    with open(idionly2vec_kv_path, 'w') as fh:
         # the first line is vocab_size dim_size
         # e.g. 1999995 300
-        fh.write(" ".join([len(idioms), args.vector_size]) + "\n")
+        fh.write(" ".join([str(len(idioms)), str(args.vector_size)]) + "\n")
         for idiom, idiom_vec in zip(idioms, idiom_vectors):
             fh.write(idiom + " ")
             for comp in idiom_vec:
