@@ -53,10 +53,9 @@ def process_line_opensub(line: str) -> List[str]:
     global iip, cleaner
     cleaned = cleaner(line)
     return [
-        token.lemma_.replace(" ", "_") if token._.is_idiom else token.lemma_  # lemmatise them.
+        token.lemma_.replace(" ", "_") if token._.is_idiom else token.text  # lemmatise only if they are idioms.
         for token in iip(cleaned)
         if len(token.text) > 1  # should be longer than 1
-        if not token.is_stop  # don't need stop words
         if not token.is_punct  # don't need punctuations
         if not token.like_num  # don't need numbers
     ]

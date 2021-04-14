@@ -14,3 +14,6 @@ playground/__pycache__/
 .idea/workspace.xml
 
 corpora
+dist
+build
+idiom2vec.egg-info
