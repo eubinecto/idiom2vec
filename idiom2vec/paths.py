@@ -17,7 +17,7 @@ COCA_SPOK_CORPORA_DIR = path.join(COCA_SPOK_DIR, "corpora")
 COCA_SPOK_ORIGIN_TXT_PATH = path.join(COCA_SPOK_DIR, 'origin.txt')
 COCA_SPOK_ORIGIN_SPLITS_DIR = path.join(COCA_SPOK_DIR, 'origin_splits')
 COCA_SPOK_TRAIN_SPLITS_DIR = path.join(COCA_SPOK_DIR, 'train_splits')
-COCA_SPOK_TRAIN_SPLITS_FS_CSV_PATH = path.join(COCA_SPOK_TRAIN_SPLITS_DIR, 'fs_manifest_csv')
+COCA_SPOK_TRAIN_SPLITS_FS_CSV_PATH = path.join(COCA_SPOK_TRAIN_SPLITS_DIR, 'fs_manifest.csv')
 COCA_SPOK_TRAIN_NDJSON_PATH = path.join(COCA_SPOK_DIR, 'train.ndjson')
 
 # coca_mag

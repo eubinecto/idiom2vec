@@ -282,3 +282,11 @@ under_the_table 0.409618616104126
 ```
 
 land of opportunity! That's interesting.
+
+
+## 14th of April
+
+기존의 스플릿부터 시작할 수 있도록 함.
+
+ssh가 자꾸 꺼지는 이유를 알았다.
+- https://stackoverflow.com/questions/25084288/keep-ssh-session-alive

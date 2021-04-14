@@ -12,3 +12,5 @@ __pycache__/
 playground/__pycache__/
 /idiom2vecenv
 .idea/workspace.xml
+
+corpora
