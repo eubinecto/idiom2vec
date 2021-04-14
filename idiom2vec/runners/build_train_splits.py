@@ -37,7 +37,7 @@ def process_line_coca(line: str) -> List[List[str]]:
     # list of list of tokens. This is what we want.
     sents_processed = [
         [
-            token.lemma_.replace(" ", "_") if token._.is_idiom else token.lemma_  # lemmatise them.
+            token.lemma_.replace(" ", "_") if token._.is_idiom else token.text # lemmatise idioms only.
             for token in iip(sent)
             if len(token.text) > 1  # should be longer than 1
             if not token.is_stop  # don't need stop words
