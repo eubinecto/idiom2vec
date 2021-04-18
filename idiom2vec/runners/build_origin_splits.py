@@ -18,7 +18,8 @@ def main():
                         type=int,
                         default=200000)
     parser.add_argument('--corpus_name',
-                        type=str)
+                        type=str,
+                        default="coca_spok")
     args = parser.parse_args()
 
     # --- init the paths --- #

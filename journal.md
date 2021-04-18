@@ -290,3 +290,22 @@ land of opportunity! That's interesting.
 
 ssh가 자꾸 꺼지는 이유를 알았다.
 - https://stackoverflow.com/questions/25084288/keep-ssh-session-alive
+
+
+## 15th of April
+
+verision 001. done.
+trained on: coca_spok (full)
+opensub: only partial 
+
+we have vectors for...
+
+
+
+transfer laerning:
+    if args.transfer_learning:
+        # https://phdstatsphys.wordpress.com/2018/12/27/word2vec-how-to-train-and-update-it/
+        idiom2vec = ...
+
+
+Now the problem is, evaluating the models.

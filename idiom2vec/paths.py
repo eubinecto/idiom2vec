@@ -46,5 +46,7 @@ OPENSUB_TRAIN_NDJSON_PATH = path.join(OPENSUB_DIR, 'train.ndjson')
 
 
 # idiom2vec
-IDIOM2VEC_001_BIN = path.join(IDIOM2VEC_DIR, "idiom2vec_001.bin")
-IDIONLY2VEC_001_KV = path.join(IDIOM2VEC_DIR, "idionly2vec_001.kv")
+IDIOM2VEC_WV_001_BIN = path.join(IDIOM2VEC_DIR, "idiom2vec_wv_001.bin")
+IDIOM2VEC_WV_002_BIN = path.join(IDIOM2VEC_DIR, "idiom2vec_wv_002.bin")
+
+IDIOM2VEC_DV_001_BIN = path.join(IDIOM2VEC_DIR, "idiom2vec_dv_001.bin")

@@ -1,18 +1,21 @@
 """
 trains an idiom2vec model.
 """
-from gensim.models import Word2Vec
+from gensim.models import Word2Vec, Doc2Vec
+from gensim.models.doc2vec import TaggedDocument
 from gensim.models.callbacks import CallbackAny2Vec
 from idiom2vec.corpora import IdiomSentences
 from idiom2vec.paths import (
-    IDIOM2VEC_001_BIN,
-    IDIONLY2VEC_001_KV
+    IDIOM2VEC_WV_001_BIN,
+    IDIOM2VEC_WV_002_BIN,
+    IDIOM2VEC_DV_001_BIN
 )
-from identify_idioms.service import load_idioms
 from sys import stdout
 from matplotlib import pyplot as plt
 import argparse
 import logging
+import gensim.downloader as api
+# projection weights... right...?
 logging.basicConfig(stream=stdout, level=logging.INFO)
 
 
@@ -46,6 +49,72 @@ class Idiom2VecCallback(CallbackAny2Vec):
         plt.show()
 
 
+def train_with_word2vec(args,  sents: IdiomSentences):
+
+    # -- params set up --- #
+    w2v_params = {
+        'vector_size': args.vector_size,
+        'window': args.window,
+        'alpha': args.alpha,
+        'min_count': args.min_count,
+        'workers': args.workers,
+        'sg': args.sg,
+        'epochs': args.epochs,
+        'compute_loss': args.compute_loss
+    }
+
+    # --- paths setup --- #
+    if args.model_version == "001":
+        idiom2vec_bin_path = IDIOM2VEC_WV_001_BIN
+    elif args.model_version == "002":
+        idiom2vec_bin_path = IDIOM2VEC_WV_002_BIN
+    else:
+        raise ValueError
+
+    # --- logger setup --- #
+    logger = logging.getLogger("train_idiom2vec")
+
+    # --- training a word2vec model from scratch --- #
+    idiom2vec = Word2Vec(**w2v_params,
+                         sentences=sents,
+                         callbacks=[Idiom2VecCallback()])
+
+    # --- save the model --- #
+    idiom2vec.save(idiom2vec_bin_path)
+
+
+def train_with_doc2vec(args, sents: IdiomSentences):
+    # --- params setup --- #
+    d2v_params = {
+        'vector_size': args.vector_size,
+        'window': args.window,
+        'alpha': args.alpha,
+        'min_count': args.min_count,
+        'workers': args.workers,
+        'epochs': args.epochs,
+        'compute_loss': args.compute_loss,
+        'dm_concat': args.dm_concat,
+        # if 1, it trains word vectors simultaneously with doc vectors.
+        'dbow_words': args.dbow_words
+    }
+    # documents setup --- #
+    docs = [
+        TaggedDocument(sent, "sent_" + str(idx))
+        for idx, sent in enumerate(sents)
+    ]
+
+    # --- paths setup --- #
+    if args.model_version == "001":
+        idiom2vec_bin_path = IDIOM2VEC_DV_001_BIN
+    else:
+        raise ValueError
+    idiom2vec = Doc2Vec(**d2v_params,
+                        documents=docs,
+                        callbacks=[Idiom2VecCallback()])
+
+    idiom2vec.save(idiom2vec_bin_path)
+
+
 def main():
     parser = argparse.ArgumentParser()
     # the size of the embedding vector.
@@ -59,7 +128,7 @@ def main():
     # only the words with a frequency above the minimum count will be included in the vocab.
     parser.add_argument('--min_count',
                         type=int,
-                        default=1)
+                        default=5)
     parser.add_argument('--alpha',
                         type=float,
                         default=0.025)
@@ -81,71 +150,31 @@ def main():
                         default=False,
                         action='store_true')
 
+    parser.add_argument('--dm_concat',
+                        type=int,
+                        default=0)
+    parser.add_argument('--dbow_words',
+                        type=int,
+                        default=1)
     # the files to save
     parser.add_argument('--model_version',
                         type=str,
                         default="001")
-
-    parser.add_argument('--pretrained_model',
+    parser.add_argument('--train_with',
                         type=str,
-                        default="glove-wiki-gigaword-200")
+                        default="word2vec")
     args = parser.parse_args()
-
-    # --- params setup --- #
-    # the parameters to pass to word2vec.
-    w2v_params = {
-        'vector_size': args.vector_size,
-        'window': args.window,
-        'alpha': args.alpha,
-        'min_count': args.min_count,
-        'workers': args.workers,
-        'sg': args.sg,
-        'epochs': args.epochs,
-        'compute_loss': args.compute_loss
-    }
-
-    # --- paths setup --- #
-    if args.model_version == "001":
-        idiom2vec_bin_path = IDIOM2VEC_001_BIN
-        idionly2vec_kv_path = IDIONLY2VEC_001_KV
-    else:
-        raise
-
-    # --- logger setup --- #
-    logger = logging.getLogger("train_idiom2vec")
-
     # --- prepare the corpus --- #
     # the corpus that will be streamed
     sents = IdiomSentences()
 
-    # --- pre-load the model --- #
-    # train it with idiomatic sentences
-    idiom2vec = Word2Vec(**w2v_params,
-                         sentences=sents,
-                         callbacks=[Idiom2VecCallback()])
-
-    # save idiom2vec.
-    idiom2vec.save(idiom2vec_bin_path)
-
-    # --- save idionly2vec --- #
-    idioms = [
-        idiom
-        for idiom in load_idioms()  # get this from identify idioms lib.
-        if idiom2vec.wv.key_to_index.get(idiom, None)
-    ]
-    idiom_vectors = [
-        idiom2vec.wv.get_vector(idiom)
-        for idiom in idioms
-    ]
-    with open(idionly2vec_kv_path, 'w') as fh:
-        # the first line is vocab_size dim_size
-        # e.g. 1999995 300
-        fh.write(" ".join([str(len(idioms)), str(args.vector_size)]) + "\n")
-        for idiom, idiom_vec in zip(idioms, idiom_vectors):
-            fh.write(idiom + " ")
-            for comp in idiom_vec:
-                fh.write(str(comp) + " ")  # write each component
-            fh.write("\n")   # end with a new line.
+    # --- start training --- #
+    if args.train_with == "word2vec":
+        train_with_word2vec(args, sents)
+    elif args.train_with == "doc2vec":
+        train_with_doc2vec(args, sents)
+    else:
+        raise ValueError
 
 
 if __name__ == '__main__':

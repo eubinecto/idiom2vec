@@ -1,15 +1,21 @@
-from gensim.models import Word2Vec, KeyedVectors
+from gensim.models import Word2Vec
 from identify_idioms.service import load_idioms
+from idiom2vec.paths import IDIOM2VEC_WV_001_BIN, IDIONLY2VEC_001_KV
 
 
 def main():
-    idiom2vec_model = Word2Vec.load("../../data/idiom2vec/idiom2vec_001.model")
+    idiom2vec_model = Word2Vec.load(IDIOM2VEC_WV_001_BIN)
     # --- save idionly2vec --- #
-    vector_size = 100
-    idionly2vec_kv_path = "../../data/idiom2vec/idionly2vec_001.kv"
+    vector_size = 200
+    idionly2vec_kv_path = IDIONLY2VEC_001_KV
+
+    keys = [
+        idiom.replace(" ", "_")
+        for idiom in load_idioms()
+    ]
     idioms = [
         idiom
-        for idiom in load_idioms()  # get this from identify idioms lib.
+        for idiom in keys  # get this from identify idioms lib.
         if idiom2vec_model.wv.key_to_index.get(idiom, None)
     ]
     idiom_vectors = [

@@ -1,12 +1,17 @@
 from gensim.models import KeyedVectors
+from idiom2vec.paths import IDIONLY2VEC_001_KV
 
 
 def main():
-    idionly2vec_kv_path = "../../data/idiom2vec/idionly2vec_001.kv"
-    idionly2vec_kv = KeyedVectors.load_word2vec_format(idionly2vec_kv_path, binary=False)
+    idionly2vec_kv = KeyedVectors.load_word2vec_format(IDIONLY2VEC_001_KV, binary=False)
+    idiom = "catch-22"
+    print("# --- idioms similar to {} --- #".format(idiom))
+    for key, sim in idionly2vec_kv.most_similar(idiom):
+        print(key, sim)
 
-    print("# --- idioms similar to american dream --- #")
-    for key, sim in idionly2vec_kv.most_similar('american_dream'):
+    idiom = "beat_around_the_bush"
+    print("# --- idioms similar to {} --- #".format(idiom))
+    for key, sim in idionly2vec_kv.most_similar(idiom):
         print(key, sim)
 
 

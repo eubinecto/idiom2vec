@@ -1,5 +1,4 @@
-# idiom2vec 002
-# corpus: coca_spok. doc_is_sent=False.
+# idiom2vec 001
 # the parameters are as follows
 python3 ../idiom2vec/runners/train_idiom2vec.py \
     --vector_size=200 \
@@ -9,4 +8,5 @@ python3 ../idiom2vec/runners/train_idiom2vec.py \
     --sg=1 \
     --epochs=100 \
     --compute_loss \
-    --model_version="001"
+    --model_version="001"\
+    --train_with="word2vec"

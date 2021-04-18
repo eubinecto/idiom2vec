@@ -12,7 +12,7 @@ from idiom2vec.paths import (
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--corpus_name', type=str, default="opensub")
+    parser.add_argument('--corpus_name', type=str, default="coca_spok")
     args = parser.parse_args()
     # --- init the paths --- #
     if args.corpus_name == "coca_spok":
