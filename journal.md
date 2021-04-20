@@ -326,3 +326,112 @@ O
 
 
 In the meanwhile, you have to find your way of
+
+
+Training the model. 
+
+
+```commandline
+INFO:gensim.models.word2vec:EPOCH - 76 : training on 36966282 raw words (26787003 effective words) took 86.4s, 310153 effective words/s
+Cumulative loss after epoch 76: 134217728.0
+Offset to previous loss: 32120.0
+INFO:gensim.models.word2vec:EPOCH 77 - PROGRESS: at 0.43% examples, 223218 words/s, in_qsize 16, out_qsize 3
+INFO:gensim.models.word2vec:EPOCH 77 - PROGRESS: at 0.95% examples, 263480 words/s, in_qsize 14, out_qsize 1
+INFO:gensim.models.word2vec:EPOCH 77 - PROGRESS: at 1.51% examples, 288931 words/s, in_qsize 12, out_qsize 3
+INFO:gensim.models.word2vec:EPOCH 77 - PROGRESS: at 2.21% examples, 301148 words/s, in_qsize 15, out_qsize 1
+INFO:gensim.models.word2vec:EPOCH 77 - PROGRESS: at 2.82% examples, 307891 words/s, in_qsize 15, out_qsize 0
+INFO:gensim.models.word2vec:EPOCH 77 - PROGRESS: at 3.40% examples, 311362 words/s, in_qsize 15, out_qsize 0
+INFO:gensim.models.word2vec:EPOCH 77 - PROGRESS: at 3.97% examples, 313463 words/s, in_qsize 14, out_qsize 0
+INFO:gensim.models.word2vec:EPOCH 77 - PROGRESS: at 4.58% examples, 309582 words/s, in_qsize 15, out_qsize 0
+INFO:gensim.models.word2vec:EPOCH 77 - PROGRESS: at 5.21% examples, 309749 words/s, in_qsize 16, out_qsize 0
+INFO:gensim.models.word2vec:EPOCH 77 - PROGRESS: at 5.86% examples, 310529 words/s, in_qsize 15, out_qsize 1
+INFO:gensim.models.word2vec:EPOCH 77 - PROGRESS: at 6.53% examples, 312237 words/s, in_qsize 15, out_qsize 0
+INFO:gensim.models.word2vec:EPOCH 77 - PROGRESS: at 7.02% examples, 310091 words/s, in_qsize 12, out_qsize 4
+INFO:gensim.models.word2vec:EPOCH 77 - PROGRESS: at 7.64% examples, 312562 words/s, in_qsize 14, out_qsize 1
+INFO:gensim.models.word2vec:EPOCH 77 - PROGRESS: at 8.35% examples, 314124 words/s, in_qsize 15, out_qsize 0
+INFO:gensim.models.word2vec:EPOCH 77 - PROGRESS: at 8.99% examples, 315223 words/s, in_qsize 15, out_qsize 0
+INFO:gensim.models.word2vec:EPOCH 77 - PROGRESS: at 9.55% examples, 315393 words/s, in_qsize 15, out_qsize 1
+INFO:gensim.models.word2vec:EPOCH 77 - PROGRESS: at 10.15% examples, 314863 words/s, in_qsize 15, out_qsize 1
+INFO:gensim.models.word2vec:EPOCH 77 - PROGRESS: at 10.83% examples, 314646 words/s, in_qsize 15, out_qsize 0
+INFO:gensim.models.word2vec:EPOCH 77 - PROGRESS: at 11.42% examples, 315378 words/s, in_qsize 16, out_qsize 0
+INFO:gensim.models.word2vec:EPOCH 77 - PROGRESS: at 11.82% examples, 314114 words/s, in_qsize 15, out_qsize 0
+INFO:gensim.models.word2vec:EPOCH 77 - PROGRESS: at 12.33% examples, 315852 words/s, in_qsize 15, out_qsize 0
+INFO:gensim.models.word2vec:EPOCH 77 - PROGRESS: at 12.88% examples, 316295 words/s, in_qsize 16, out_qsize 0
+INFO:gensim.models.word2vec:EPOCH 77 - PROGRESS: at 13.38% examples, 315986 words/s, in_qsize 15, out_qsize 0
+INFO:gensim.models.word2vec:EPOCH 77 - PROGRESS: at 13.91% examples, 316473 words/s, in_qsize 15, out_qsize 0
+INFO:gensim.models.word2vec:EPOCH 77 - PROGRESS: at 14.50% examples, 316458 words/s, in_qsize 15, out_qsize 0
+INFO:gensim.models.word2vec:EPOCH 77 - PROGRESS: at 15.11% examples, 316768 words/s, in_qsize 15, out_qsize 0
+INFO:gensim.models.word2vec:EPOCH 77 - PROGRESS: at 15.72% examples, 317569 words/s, in_qsize 15, out_qsize 1
+INFO:gensim.models.word2vec:EPOCH 77 - PROGRESS: at 16.27% examples, 316582 words/s, in_qsize 14, out_qsize 1
+INFO:gensim.models.word2vec:EPOCH 77 - PROGRESS: at 16.76% examples, 315972 words/s, in_qsize 13, out_qsize 3
+INFO:gensim.models.word2vec:EPOCH 77 - PROGRESS: at 17.46% examples, 316311 words/s, in_qsize 15, out_qsize 0
+INFO:gensim.models.word2vec:EPOCH 77 - PROGRESS: at 18.09% examples, 315465 words/s, in_qsize 15, out_qsize 0
+INFO:gensim.models.word2vec:EPOCH 77 - PROGRESS: at 18.68% examples, 314384 words/s, in_qsize 14, out_qsize 1
+INFO:gensim.models.word2vec:EPOCH 77 - PROGRESS: at 19.31% examples, 313463 words/s, in_qsize 15, out_qsize 0
+INFO:gensim.models.word2vec:EPOCH 77 - PROGRESS: at 20.94% examples, 313267 words/s, in_qsize 15, out_qsize 0
+INFO:gensim.models.word2vec:EPOCH 77 - PROGRESS: at 22.67% examples, 313040 words/s, in_qsize 15, out_qsize 0
+INFO:gensim.models.word2vec:EPOCH 77 - PROGRESS: at 24.40% examples, 313293 words/s, in_qsize 13, out_qsize 1
+INFO:gensim.models.word2vec:EPOCH 77 - PROGRESS: at 26.06% examples, 313302 words/s, in_qsize 15, out_qsize 0
+INFO:gensim.models.word2vec:EPOCH 77 - PROGRESS: at 27.79% examples, 312959 words/s, in_qsize 15, out_qsize 0
+INFO:gensim.models.word2vec:EPOCH 77 - PROGRESS: at 29.44% examples, 313000 words/s, in_qsize 15, out_qsize 0
+INFO:gensim.models.word2vec:EPOCH 77 - PROGRESS: at 31.18% examples, 313437 words/s, in_qsize 15, out_qsize 0
+INFO:gensim.models.word2vec:EPOCH 77 - PROGRESS: at 32.76% examples, 312920 words/s, in_qsize 16, out_qsize 1
+INFO:gensim.models.word2vec:EPOCH 77 - PROGRESS: at 34.19% examples, 311850 words/s, in_qsize 15, out_qsize 7
+INFO:gensim.models.word2vec:EPOCH 77 - PROGRESS: at 36.11% examples, 312906 words/s, in_qsize 12, out_qsize 1
+INFO:gensim.models.word2vec:EPOCH 77 - PROGRESS: at 37.61% examples, 312338 words/s, in_qsize 15, out_qsize 0
+INFO:gensim.models.word2vec:EPOCH 77 - PROGRESS: at 39.17% examples, 312075 words/s, in_qsize 14, out_qsize 2
+INFO:gensim.models.word2vec:EPOCH 77 - PROGRESS: at 40.90% examples, 312003 words/s, in_qsize 16, out_qsize 3
+INFO:gensim.models.word2vec:EPOCH 77 - PROGRESS: at 42.43% examples, 311630 words/s, in_qsize 14, out_qsize 2
+INFO:gensim.models.word2vec:EPOCH 77 - PROGRESS: at 44.11% examples, 312191 words/s, in_qsize 14, out_qsize 1
+INFO:gensim.models.word2vec:EPOCH 77 - PROGRESS: at 45.81% examples, 312108 words/s, in_qsize 15, out_qsize 0
+INFO:gensim.models.word2vec:EPOCH 77 - PROGRESS: at 47.35% examples, 312013 words/s, in_qsize 15, out_qsize 0
+INFO:gensim.models.word2vec:EPOCH 77 - PROGRESS: at 48.88% examples, 311991 words/s, in_qsize 16, out_qsize 1
+INFO:gensim.models.word2vec:EPOCH 77 - PROGRESS: at 50.47% examples, 311990 words/s, in_qsize 12, out_qsize 3
+INFO:gensim.models.word2vec:EPOCH 77 - PROGRESS: at 51.82% examples, 311409 words/s, in_qsize 15, out_qsize 0
+INFO:gensim.models.word2vec:EPOCH 77 - PROGRESS: at 53.35% examples, 311361 words/s, in_qsize 15, out_qsize 0
+INFO:gensim.models.word2vec:EPOCH 77 - PROGRESS: at 54.92% examples, 311292 words/s, in_qsize 15, out_qsize 0
+INFO:gensim.models.word2vec:EPOCH 77 - PROGRESS: at 56.50% examples, 311064 words/s, in_qsize 15, out_qsize 0
+INFO:gensim.models.word2vec:EPOCH 77 - PROGRESS: at 58.10% examples, 311188 words/s, in_qsize 15, out_qsize 0
+INFO:gensim.models.word2vec:EPOCH 77 - PROGRESS: at 59.77% examples, 311401 words/s, in_qsize 16, out_qsize 1
+INFO:gensim.models.word2vec:EPOCH 77 - PROGRESS: at 61.24% examples, 311152 words/s, in_qsize 16, out_qsize 3
+INFO:gensim.models.word2vec:EPOCH 77 - PROGRESS: at 62.78% examples, 310924 words/s, in_qsize 14, out_qsize 4
+INFO:gensim.models.word2vec:EPOCH 77 - PROGRESS: at 64.43% examples, 311129 words/s, in_qsize 15, out_qsize 0
+INFO:gensim.models.word2vec:EPOCH 77 - PROGRESS: at 65.70% examples, 310339 words/s, in_qsize 16, out_qsize 4
+INFO:gensim.models.word2vec:EPOCH 77 - PROGRESS: at 67.40% examples, 310582 words/s, in_qsize 16, out_qsize 2
+INFO:gensim.models.word2vec:EPOCH 77 - PROGRESS: at 68.88% examples, 310355 words/s, in_qsize 16, out_qsize 2
+INFO:gensim.models.word2vec:EPOCH 77 - PROGRESS: at 70.47% examples, 310640 words/s, in_qsize 16, out_qsize 0
+INFO:gensim.models.word2vec:EPOCH 77 - PROGRESS: at 72.04% examples, 310578 words/s, in_qsize 16, out_qsize 0
+INFO:gensim.models.word2vec:EPOCH 77 - PROGRESS: at 73.43% examples, 310303 words/s, in_qsize 12, out_qsize 3
+INFO:gensim.models.word2vec:EPOCH 77 - PROGRESS: at 75.03% examples, 310744 words/s, in_qsize 13, out_qsize 0
+INFO:gensim.models.word2vec:EPOCH 77 - PROGRESS: at 76.53% examples, 310555 words/s, in_qsize 16, out_qsize 0
+INFO:gensim.models.word2vec:EPOCH 77 - PROGRESS: at 78.13% examples, 310509 words/s, in_qsize 12, out_qsize 4
+INFO:gensim.models.word2vec:EPOCH 77 - PROGRESS: at 79.56% examples, 310310 words/s, in_qsize 15, out_qsize 0
+INFO:gensim.models.word2vec:EPOCH 77 - PROGRESS: at 81.07% examples, 310257 words/s, in_qsize 11, out_qsize 3
+INFO:gensim.models.word2vec:EPOCH 77 - PROGRESS: at 82.80% examples, 310146 words/s, in_qsize 16, out_qsize 1
+INFO:gensim.models.word2vec:EPOCH 77 - PROGRESS: at 84.37% examples, 310255 words/s, in_qsize 16, out_qsize 0
+INFO:gensim.models.word2vec:EPOCH 77 - PROGRESS: at 86.01% examples, 310424 words/s, in_qsize 16, out_qsize 1
+INFO:gensim.models.word2vec:EPOCH 77 - PROGRESS: at 87.44% examples, 310130 words/s, in_qsize 16, out_qsize 1
+INFO:gensim.models.word2vec:EPOCH 77 - PROGRESS: at 88.92% examples, 309777 words/s, in_qsize 15, out_qsize 0
+INFO:gensim.models.word2vec:EPOCH 77 - PROGRESS: at 90.48% examples, 309796 words/s, in_qsize 16, out_qsize 0
+INFO:gensim.models.word2vec:EPOCH 77 - PROGRESS: at 91.94% examples, 309560 words/s, in_qsize 14, out_qsize 2
+INFO:gensim.models.word2vec:EPOCH 77 - PROGRESS: at 93.47% examples, 309346 words/s, in_qsize 14, out_qsize 3
+INFO:gensim.models.word2vec:EPOCH 77 - PROGRESS: at 95.11% examples, 309613 words/s, in_qsize 15, out_qsize 1
+INFO:gensim.models.word2vec:EPOCH 77 - PROGRESS: at 96.56% examples, 309541 words/s, in_qsize 13, out_qsize 1
+INFO:gensim.models.word2vec:EPOCH 77 - PROGRESS: at 98.00% examples, 309273 words/s, in_qsize 12, out_qsize 4
+INFO:gensim.models.word2vec:EPOCH 77 - PROGRESS: at 99.74% examples, 309850 words/s, in_qsize 8, out_qsize 0
+INFO:gensim.models.word2vec:worker thread finished; awaiting finish of 7 more threads
+INFO:gensim.models.word2vec:worker thread finished; awaiting finish of 6 more threads
+INFO:gensim.models.word2vec:worker thread finished; awaiting finish of 5 more threads
+INFO:gensim.models.word2vec:worker thread finished; awaiting finish of 4 more threads
+INFO:gensim.models.word2vec:worker thread finished; awaiting finish of 3 more threads
+INFO:gensim.models.word2vec:worker thread finished; awaiting finish of 2 more threads
+INFO:gensim.models.word2vec:worker thread finished; awaiting finish of 1 more threads
+INFO:gensim.models.word2vec:worker thread finished; awaiting finish of 0 more threads
+INFO:gensim.models.word2vec:EPOCH - 77 : training on 36966282 raw words (26787365 effective words) took 86.3s, 310238 effective words/s
+Cumulative loss after epoch 77: 134217728.0
+Offset to previous loss: 0.0
+INFO:gensim.models.word2vec:E
+```
+
+The model finds the optimum at Epoch 77. SO you should do it in that way, maybe?
+

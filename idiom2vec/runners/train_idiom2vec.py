@@ -8,7 +8,7 @@ from idiom2vec.corpora import IdiomSentences
 from idiom2vec.paths import (
     IDIOM2VEC_WV_001_BIN,
     IDIOM2VEC_WV_002_BIN,
-    IDIOM2VEC_DV_001_BIN
+    IDIOM2VEC_DV_001_BIN, IDIOM2VEC_WV_003_BIN
 )
 from sys import stdout
 from matplotlib import pyplot as plt
@@ -68,6 +68,8 @@ def train_with_word2vec(args,  sents: IdiomSentences):
         idiom2vec_bin_path = IDIOM2VEC_WV_001_BIN
     elif args.model_version == "002":
         idiom2vec_bin_path = IDIOM2VEC_WV_002_BIN
+    elif args.model_version == "003":
+        idiom2vec_bin_path = IDIOM2VEC_WV_003_BIN
     else:
         raise ValueError
 
@@ -149,7 +151,14 @@ def main():
                         dest='compute_loss',
                         default=False,
                         action='store_true')
-
+    parser.add_argument('--remove_stopwords',
+                        dest='remove_stopwords',
+                        default=False,
+                        action='store_true')
+    parser.add_argument('--remove_propns',
+                        dest='remove_propns',
+                        default=False,
+                        action='store_true')
     parser.add_argument('--dm_concat',
                         type=int,
                         default=0)
@@ -166,7 +175,7 @@ def main():
     args = parser.parse_args()
     # --- prepare the corpus --- #
     # the corpus that will be streamed
-    sents = IdiomSentences()
+    sents = IdiomSentences(args.remove_stopwords, args.remove_propns)
 
     # --- start training --- #
     if args.train_with == "word2vec":
