@@ -17,6 +17,7 @@ IDIOM2VEC_DIR = path.join(PROJECT_DATA_DIR, "idiom2vec")
 
 # idioms
 IDIOM2SENT_TSV = path.join(IDIOMS_DIR, "idiom2sent.tsv")
+IDIOM2LEMMA2POS_TSV = path.join(IDIOMS_DIR, "idiom2lemma2pos.tsv")  # lemmatised, cleaned. stopwords are removed.
 
 
 # coca_spok

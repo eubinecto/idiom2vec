@@ -309,3 +309,20 @@ transfer laerning:
 
 
 Now the problem is, evaluating the models.
+
+
+doc2vec은 일단, 생각을 하지 않는 편이 나을 것. word2vec. 
+
+
+
+the expected training time:
+```commandline
+
+INFO:gensim.models.word2vec:EPOCH - 4 : training on 36966282 raw words (26791827 effective words) took 140.3s, 190898 effective words/s
+Cumulative loss after epoch 4: 72027336.0
+O
+```
+140.3 * 70 / 60 = 163 minutes. around... 3 hours maybe?
+
+
+In the meanwhile, you have to find your way of

@@ -159,7 +159,7 @@ def main():
     # the files to save
     parser.add_argument('--model_version',
                         type=str,
-                        default="001")
+                        default="002")
     parser.add_argument('--train_with',
                         type=str,
                         default="word2vec")
