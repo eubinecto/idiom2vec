@@ -8,7 +8,7 @@ from idiom2vec.corpora import IdiomSentences
 from idiom2vec.paths import (
     IDIOM2VEC_WV_001_BIN,
     IDIOM2VEC_WV_002_BIN,
-    IDIOM2VEC_DV_001_BIN, IDIOM2VEC_WV_003_BIN
+    IDIOM2VEC_DV_001_BIN, IDIOM2VEC_WV_003_BIN, GLOVE, IDIOM2VEC_WV_004_BIN
 )
 from sys import stdout
 from matplotlib import pyplot as plt
@@ -70,16 +70,29 @@ def train_with_word2vec(args,  sents: IdiomSentences):
         idiom2vec_bin_path = IDIOM2VEC_WV_002_BIN
     elif args.model_version == "003":
         idiom2vec_bin_path = IDIOM2VEC_WV_003_BIN
+    elif args.model_version == "004":
+        idiom2vec_bin_path = IDIOM2VEC_WV_004_BIN
     else:
         raise ValueError
 
     # --- logger setup --- #
     logger = logging.getLogger("train_idiom2vec")
-
-    # --- training a word2vec model from scratch --- #
-    idiom2vec = Word2Vec(**w2v_params,
-                         sentences=sents,
-                         callbacks=[Idiom2VecCallback()])
+    if args.intersect_glove:
+        idiom2vec = Word2Vec(**w2v_params)
+        # intersect glove. Do not change the vectors.
+        idiom2vec.wv.intersect_word2vec_format(GLOVE, binary=True, lockf=0.0)
+        idiom2vec.build_vocab(sents)  # then build a vocab.
+        # --- training a word2vec model from scratch --- #
+        idiom2vec.train(sents,
+                        epochs=idiom2vec.epochs,
+                        compute_loss=idiom2vec.compute_loss,
+                        total_examples=idiom2vec.corpus_count,
+                        callbacks=[Idiom2VecCallback()])
+    else:
+        # train the model
+        idiom2vec = Word2Vec(**w2v_params,
+                             sentences=sents,
+                             callbacks=[Idiom2VecCallback()])
 
     # --- save the model --- #
     idiom2vec.save(idiom2vec_bin_path)
@@ -157,6 +170,10 @@ def main():
                         action='store_true')
     parser.add_argument('--remove_propns',
                         dest='remove_propns',
+                        default=False,
+                        action='store_true')
+    parser.add_argument('--intersect_glove',
+                        dest='intersect_glove',
                         default=False,
                         action='store_true')
     parser.add_argument('--dm_concat',

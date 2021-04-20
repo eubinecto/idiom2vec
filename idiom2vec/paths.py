@@ -14,11 +14,11 @@ PROJECT_LIB_DIR = str(Path(__file__).resolve().parent)
 IDIOMS_DIR = path.join(CORPORA_DIR, "idioms")
 PROJECT_DATA_DIR = path.join(DATA_DIR, "data_idiom2vec")
 IDIOM2VEC_DIR = path.join(PROJECT_DATA_DIR, "idiom2vec")
+WORD2VEC_DIR = path.join(PROJECT_DATA_DIR, 'word2vec')
 
 # idioms
 IDIOM2SENT_TSV = path.join(IDIOMS_DIR, "idiom2sent.tsv")
 IDIOM2LEMMA2POS_TSV = path.join(IDIOMS_DIR, "idiom2lemma2pos.tsv")  # lemmatised, cleaned. stopwords are removed.
-
 
 # coca_spok
 COCA_SPOK_CORPORA_DIR = path.join(COCA_SPOK_DIR, "corpora")
@@ -50,6 +50,10 @@ OPENSUB_TRAIN_NDJSON_PATH = path.join(OPENSUB_DIR, 'train.ndjson')
 IDIOM2VEC_WV_001_BIN = path.join(IDIOM2VEC_DIR, "idiom2vec_wv_001.bin")
 IDIOM2VEC_WV_002_BIN = path.join(IDIOM2VEC_DIR, "idiom2vec_wv_002.bin")
 IDIOM2VEC_WV_003_BIN = path.join(IDIOM2VEC_DIR, "idiom2vec_wv_003.bin")
-
+IDIOM2VEC_WV_004_BIN = path.join(IDIOM2VEC_DIR, "idiom2vec_wv_004.bin")
 # doc2vec
 IDIOM2VEC_DV_001_BIN = path.join(IDIOM2VEC_DIR, "idiom2vec_dv_001.bin")
+
+
+# word2vec
+GLOVE = path.join(WORD2VEC_DIR, 'glove')

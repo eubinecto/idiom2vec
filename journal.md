@@ -435,3 +435,15 @@ INFO:gensim.models.word2vec:E
 
 The model finds the optimum at Epoch 77. SO you should do it in that way, maybe?
 
+
+
+remove ppnouns and remove stopwords를 하고나니...
+
+```commandline
+INFO:gensim.models.word2vec:EPOCH - 85 : training on 14657209 raw words (13370009 effective words) took 61.3s, 218113 effective words/s
+Cumulative loss after epoch 85: 93953976.0
+Offset to previous loss: 279560.0
+```
+
+epoch 을 85까지 올렸는데도, 아직 loss가 남아있다.
+

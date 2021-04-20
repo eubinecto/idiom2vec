@@ -6,12 +6,13 @@ python3 ../idiom2vec/runners/train_idiom2vec.py \
     --vector_size=200 \
     --window=8 \
     --min_count=1 \
-    --workers=8 \
+    --workers=4 \
     --alpha=0.025 \
     --sg=1 \
-    --epochs=230 \
+    --epochs=200 \
     --compute_loss \
     --remove_stopwords \
     --remove_propns \
-    --model_version="003"\
+    --intersect_glove \
+    --model_version="004"\
     --train_with="word2vec"
