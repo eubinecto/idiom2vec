@@ -2,6 +2,7 @@
 # trained with a coca_spok (full), and opensub (full)
 # trained with raw sentences with simple clean up. (no stopwords filtering, no proper nouns filtering)
 # the parameters are as follows
+# They are all lemmatised. That's for sure.
 python3 ../idiom2vec/runners/train_idiom2vec.py \
     --vector_size=200 \
     --window=8 \

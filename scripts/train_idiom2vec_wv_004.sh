@@ -9,7 +9,7 @@ python3 ../idiom2vec/runners/train_idiom2vec.py \
     --workers=4 \
     --alpha=0.025 \
     --sg=1 \
-    --epochs=200 \
+    --epochs=130 \
     --compute_loss \
     --remove_stopwords \
     --remove_propns \

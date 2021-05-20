@@ -5,7 +5,8 @@ from gensim.models import KeyedVectors
 def main():
     glove: KeyedVectors = api.load("glove-wiki-gigaword-200")
     # save glove as a binary file.
-    glove.save_word2vec_format("./glove", binary=True)
+    for word, score in glove.similar_by_word('focus'):
+        print(word, score)
 
 
 if __name__ == '__main__':
